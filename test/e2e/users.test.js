@@ -3,6 +3,11 @@ const request = require('supertest');
 const app = require('../../lib/app');
 
 describe('end to end tests of Users route', () => {
+
+    beforeEach(() => {
+        return dropCollection('users');
+    });
+
     it('posts a user', () => {
         return request(app)
             .post('/api/users')
@@ -19,12 +24,12 @@ describe('end to end tests of Users route', () => {
                     city: 'Portland',
                     state: 'OR',
                     zip: 97205
-                }
+                },
+                password: 'dfir123'
             })
             .then(res => {
                 expect(res.body).toEqual({
                     _id: expect.any(String),
-                    _v: expect.any(Number),
                     fullName: 'Douglas Fir',
                     preferredName: 'Doug',
                     email: 'dfir@gmail.com',
