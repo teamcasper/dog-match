@@ -8,6 +8,13 @@ const { Types } = require('mongoose');
 beforeEach(() => {
     return dropCollection('users');
 });
+beforeEach(() => {
+    return dropCollection('dogs');
+});
+
+beforeEach(() => {
+    return dropCollection('breeds');
+});
 
 beforeEach(() => {
     return dropCollection('matches');
@@ -15,6 +22,8 @@ beforeEach(() => {
 
 let createdUsers;
 let createdMatches;
+let createdBreeds;
+let createdDogs;
 
 let users = [
     {
@@ -93,6 +102,91 @@ let matches = [
         dog: Types.ObjectId(),
         datePosted: Date('April 4, 2017'),
     }
+
+let breeds = [
+    {
+        name: 'Samoyed',
+        weightRange: '41 to 50 lbs',
+        lifespan: 15,
+        temperament: ['energetic', 'friendly'],
+        coatTypes: 'Smooth',
+        hypoallergenic: true,
+        shed: true
+    },
+    {
+        name: 'German sheppard',
+        weightRange: '61 to 70 lbs',
+        lifespan: 14,
+        temperament: ['herder', 'protective'],
+        coatTypes: 'Smooth',
+        hypoallergenic: false,
+        shed: true
+    },
+    {
+        name: 'Yorky',
+        weightRange: '1 to 10 lbs',
+        lifespan: 13,
+        temperament: ['head strong', 'independent'],
+        coatTypes: 'Silky',
+        hypoallergenic: true,
+        shed: false
+    }
+
+let dogs = [
+    {
+        name: 'Floof1',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
+    },
+    {
+        name: 'Floof2',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
+    },
+    {
+        name: 'Floof3',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
+    },
 ];
 
 const createUser = user => {
@@ -106,6 +200,18 @@ const createMatch = match => {
     return request(app)
         .post('/api/matches')
         .send(match)
+};
+
+const createBreed = breed => {
+    return request(app)
+        .post('/api/breeds')
+        .send(breed)
+};
+
+const createDog = dog => {
+    return request(app)
+        .post('/api/dogs')
+        .send(dog)
         .then(res => res.body);
 };
 
@@ -114,9 +220,28 @@ beforeEach(() => {
         createdUsers = usersRes;
     });
 });
+  
+beforeEach(() => {
+     return Promise.all(breeds.map(createBreed)).then(breedRes => {
+        createdBreeds = breedRes;
+     });
+});
+
+beforeEach(() => {
+    return Promise.all(dogs.map(createDog)).then(dogsRes => {
+        createdDogs = dogsRes;
+        dogs[0].dogProvider = createdUsers[2]._id;
+        dogs[1].dogProvider = createdUsers[2]._id;
+        dogs[2].dogProvider = createdUsers[2]._id;
+    });
+});
 
 const getUsers = () => createdUsers;
+const getBreeds = () => createdBreeds;
+const getDogs = () => createdDogs;
 
 module.exports = {
-    getUsers
+    getUsers,
+    getBreeds,
+    getDogs
 };
