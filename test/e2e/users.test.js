@@ -40,8 +40,8 @@ describe('end to end tests of Users route', () => {
                         state: 'OR',
                         zip: 97205
                     }
-                })
-            })
+                });
+            });
     });
 
     it('gets all users', () => {
@@ -54,5 +54,16 @@ describe('end to end tests of Users route', () => {
                 expect(res.body).toContainEqual(createdUsers[1]);
                 expect(res.body).toContainEqual(createdUsers[2]);
             });
+    });
+
+    it('gets a user by id', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .get(`/api/users/${createdUsers[1]._id}`)
+            .then(res => {
+                expect(res.body).toEqual(createdUsers[1]);
+            });
+
     });
 });
