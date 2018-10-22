@@ -66,4 +66,18 @@ describe('end to end tests of Users route', () => {
             });
 
     });
+
+    it('deletes a user by id', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .delete(`/api/users/${createdUsers[1]._id}`)
+            .then(() => request(app).get('/api/users'))
+            .then(res => {
+                expect(res.body).not.toContainEqual(createdUsers[1]);
+                expect(res.body).toContainEqual(createdUsers[0]);
+                expect(res.body).toContainEqual(createdUsers[2]);
+            });
+
+    });
 });
