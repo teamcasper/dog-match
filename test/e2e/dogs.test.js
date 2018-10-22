@@ -49,15 +49,15 @@ describe('end to end tests of Dogs route', () => {
             })
     });
 
-    // it('gets all users', () => {
-    //     const createdUsers = getUsers();
+    it('gets all dogs', () => {
+        const createdDogs = getDogs();
 
-    //     return request(app)
-    //         .get('/api/users')
-    //         .then(res => {
-    //             expect(res.body).toContainEqual(createdUsers[0]);
-    //             expect(res.body).toContainEqual(createdUsers[1]);
-    //             expect(res.body).toContainEqual(createdUsers[2]);
-    //         });
-    // });
+        return request(app)
+            .get('/api/dogs')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs[0]);
+                expect(res.body).toContainEqual(createdDogs[1]);
+                expect(res.body).toContainEqual(createdDogs[2]);
+            });
+    });
 });
