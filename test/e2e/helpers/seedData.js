@@ -8,8 +8,12 @@ const { Types } = require('mongoose');
 beforeEach(() => {
     return dropCollection('users');
 });
+beforeEach(() => {
+    return dropCollection('dogs');
+});
 
 let createdUsers;
+let createdDogs;
 
 let users = [
     {
@@ -65,10 +69,72 @@ let users = [
     }
 ];
 
+let dogs = [
+    {
+        name: 'Floof1',
+        description: 'Fluffy little friend',
+        weightInLbs: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye'
+    },
+    {
+        name: 'Floof2',
+        description: 'Fluffy little friend',
+        weightInLbs: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye'
+    },
+    {
+        name: 'Floof3',
+        description: 'Fluffy little friend',
+        weightInLbs: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye'
+    },
+
+];
+
 const createUser = user => {
     return request(app)
         .post('/api/users')
         .send(user)
+        .then(res => res.body);
+};
+
+const createDog = dog => {
+    return request(app)
+        .post('/api/dogs')
+        .send(dog)
         .then(res => res.body);
 };
 
@@ -78,8 +144,16 @@ beforeEach(() => {
     });
 });
 
+beforeEach(() => {
+    return Promise.all(dogs.map(createDog)).then(dogsRes => {
+        createdDogs = dogsRes;
+    });
+});
+
 const getUsers = () => createdUsers;
+const getDogs = () => createdDogs;
 
 module.exports = {
-    getUsers
+    getUsers,
+    getDogs
 };

@@ -9,7 +9,7 @@ describe('end to end tests of Dogs route', () => {
         return request(app)
             .post('/api/dogs')
             .send({
-                name: 'Floof2',
+                name: 'Floof4',
                 description: 'Fluffy little friend',
                 weightInLbs: 6,
                 predictedWeight: 15,
@@ -30,7 +30,7 @@ describe('end to end tests of Dogs route', () => {
                     _id: expect.any(String),
                     __v: expect.any(Number),
                     breed: expect.any(Array),
-                    name: 'Floof2',
+                    name: 'Floof4',
                     description: 'Fluffy little friend',
                     weightInLbs: 6,
                     predictedWeight: 15,
