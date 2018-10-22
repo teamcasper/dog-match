@@ -1,5 +1,5 @@
 require('dotenv').config();
-const connect = require('../../lib/util/connect');
+const connect = require('../../../lib/util/connect');
 connect(`${process.env.MONGODB_URI}`);
 const mongoose = require('mongoose');
 
