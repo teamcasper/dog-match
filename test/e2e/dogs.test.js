@@ -1,11 +1,12 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getDogs } = require('./helpers/seedData');
+const { getDogs, getUsers } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
 
     it('posts a dog', () => {
+        const createdUsers = getUsers();
         return request(app)
             .post('/api/dogs')
             .send({
@@ -23,7 +24,8 @@ describe('end to end tests of Dogs route', () => {
                 personalityAttributes: ['loving', 'playful'],
                 healthIssues: ['dental', 'vision'],
                 healthRating: 4,
-                healthDetails: 'Has a cavity, slight loss of vision in left eye'
+                healthDetails: 'Has a cavity, slight loss of vision in left eye',
+                dogProvider: createdUsers[2]._id
             })
             .then(res => {
                 expect(res.body).toEqual({
@@ -44,7 +46,8 @@ describe('end to end tests of Dogs route', () => {
                     personalityAttributes: ['loving', 'playful'],
                     healthIssues: ['dental', 'vision'],
                     healthRating: 4,
-                    healthDetails: 'Has a cavity, slight loss of vision in left eye'
+                    healthDetails: 'Has a cavity, slight loss of vision in left eye',
+                    dogProvider: createdUsers[2]._id
                 })
             })
     });

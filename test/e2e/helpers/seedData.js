@@ -85,7 +85,8 @@ let dogs = [
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
-        healthDetails: 'Has a cavity, slight loss of vision in left eye'
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof2',
@@ -102,7 +103,8 @@ let dogs = [
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
-        healthDetails: 'Has a cavity, slight loss of vision in left eye'
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof3',
@@ -119,7 +121,8 @@ let dogs = [
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
-        healthDetails: 'Has a cavity, slight loss of vision in left eye'
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
     },
 
 ];
@@ -147,6 +150,9 @@ beforeEach(() => {
 beforeEach(() => {
     return Promise.all(dogs.map(createDog)).then(dogsRes => {
         createdDogs = dogsRes;
+        dogs[0].dogProvider = createdUsers[2]._id;
+        dogs[1].dogProvider = createdUsers[2]._id;
+        dogs[2].dogProvider = createdUsers[2]._id;
     });
 });
 
