@@ -102,6 +102,7 @@ let matches = [
         dog: Types.ObjectId(),
         datePosted: Date('April 4, 2017'),
     }
+];
 
 let breeds = [
     {
@@ -131,6 +132,7 @@ let breeds = [
         hypoallergenic: true,
         shed: false
     }
+];
 
 let dogs = [
     {
@@ -199,13 +201,13 @@ const createUser = user => {
 const createMatch = match => {
     return request(app)
         .post('/api/matches')
-        .send(match)
+        .send(match);
 };
 
 const createBreed = breed => {
     return request(app)
         .post('/api/breeds')
-        .send(breed)
+        .send(breed);
 };
 
 const createDog = dog => {
@@ -222,26 +224,46 @@ beforeEach(() => {
 });
   
 beforeEach(() => {
-     return Promise.all(breeds.map(createBreed)).then(breedRes => {
+    return Promise.all(breeds.map(createBreed)).then(breedRes => {
         createdBreeds = breedRes;
-     });
+    });
 });
 
 beforeEach(() => {
     return Promise.all(dogs.map(createDog)).then(dogsRes => {
         createdDogs = dogsRes;
-        dogs[0].dogProvider = createdUsers[2]._id;
+        dogs[0].dogProvider = createdUsers[1]._id;
         dogs[1].dogProvider = createdUsers[2]._id;
         dogs[2].dogProvider = createdUsers[2]._id;
+    });
+});
+
+beforeEach(() => {
+    return Promise.all(matches.map(createMatch)).then(matchesRes => {
+        createdMatches = matchesRes;
+
+        matches[0].seeker = createdUsers[0]._id;
+        matches[0].provider = createdUsers[1]._id;
+        matches[0].dog = createdDogs[0]._id;
+
+        matches[1].seeker = createdUsers[0]._id;
+        matches[1].provider = createdUsers[2]._id;
+        matches[1].dog = createdDogs[1]._id;
+
+        matches[2].seeker = createdUsers[1]._id;
+        matches[2].provider = createdUsers[2]._id;
+        matches[2].dog = createdDogs[2]._id;
     });
 });
 
 const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
 const getDogs = () => createdDogs;
+const getMatches = () => createdMatches;
 
 module.exports = {
     getUsers,
     getBreeds,
-    getDogs
+    getDogs,
+    getMatches
 };
