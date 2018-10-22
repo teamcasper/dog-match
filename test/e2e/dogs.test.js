@@ -27,6 +27,10 @@ describe('end to end tests of Dogs route', () => {
             })
             .then(res => {
                 expect(res.body).toEqual({
+                    _id: expect.any(String),
+                    __v: expect.any(Number),
+                    breed: expect.any(Array),
+                    name: 'Floof2',
                     description: 'Fluffy little friend',
                     weightInLbs: 6,
                     predictedWeight: 15,

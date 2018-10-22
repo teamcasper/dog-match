@@ -23,7 +23,7 @@ describe('Dog Model', () => {
 
         const dog = new Dog(data);
         const jsonDog = dog.toJSON();
-        expect(jsonDog).toEqual({ ...data, _id: expect.any(Object), breed: expect.any(Array), dogProvider: expect.any(Object) });
+        expect(jsonDog).toEqual({ ...data, _id: expect.any(Object), breed: expect.any(Array)});
     });
 
     it('validates that required fields are included', () => {
