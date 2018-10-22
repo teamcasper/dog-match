@@ -48,8 +48,8 @@ describe('end to end tests of Dogs route', () => {
                     healthRating: 4,
                     healthDetails: 'Has a cavity, slight loss of vision in left eye',
                     dogProvider: createdUsers[2]._id
-                })
-            })
+                });
+            });
     });
 
     it('gets all dogs', () => {

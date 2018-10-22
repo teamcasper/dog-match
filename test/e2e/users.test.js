@@ -78,6 +78,5 @@ describe('end to end tests of Users route', () => {
                 expect(res.body).toContainEqual(createdUsers[0]);
                 expect(res.body).toContainEqual(createdUsers[2]);
             });
-
     });
 });
