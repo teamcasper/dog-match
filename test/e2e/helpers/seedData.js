@@ -12,7 +12,12 @@ beforeEach(() => {
     return dropCollection('dogs');
 });
 
+beforeEach(() => {
+    return dropCollection('breeds');
+});
+
 let createdUsers;
+let createdBreeds;
 let createdDogs;
 
 let users = [
@@ -69,6 +74,35 @@ let users = [
     }
 ];
 
+let breeds = [
+    {
+        name: 'Samoyed',
+        weightRange: '41 to 50 lbs',
+        lifespan: 15,
+        temperament: ['energetic', 'friendly'],
+        coatTypes: 'Smooth',
+        hypoallergenic: true,
+        shed: true
+    },
+    {
+        name: 'German sheppard',
+        weightRange: '61 to 70 lbs',
+        lifespan: 14,
+        temperament: ['herder', 'protective'],
+        coatTypes: 'Smooth',
+        hypoallergenic: false,
+        shed: true
+    },
+    {
+        name: 'Yorky',
+        weightRange: '1 to 10 lbs',
+        lifespan: 13,
+        temperament: ['head strong', 'independent'],
+        coatTypes: 'Silky',
+        hypoallergenic: true,
+        shed: false
+    }
+
 let dogs = [
     {
         name: 'Floof1',
@@ -124,7 +158,6 @@ let dogs = [
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
         dogProvider: Types.ObjectId()
     },
-
 ];
 
 const createUser = user => {
@@ -133,6 +166,11 @@ const createUser = user => {
         .send(user)
         .then(res => res.body);
 };
+
+const createBreed = breed => {
+    return request(app)
+        .post('/api/breeds')
+        .send(breed)
 
 const createDog = dog => {
     return request(app)
@@ -146,6 +184,12 @@ beforeEach(() => {
         createdUsers = usersRes;
     });
 });
+  
+beforeEach(() => {
+     return Promise.all(breeds.map(createBreed)).then(breedRes => {
+        createdBreeds = breedRes;
+     });
+});
 
 beforeEach(() => {
     return Promise.all(dogs.map(createDog)).then(dogsRes => {
@@ -157,9 +201,11 @@ beforeEach(() => {
 });
 
 const getUsers = () => createdUsers;
+const getBreeds = () => createdBreeds;
 const getDogs = () => createdDogs;
 
 module.exports = {
     getUsers,
+    getBreeds,
     getDogs
 };
