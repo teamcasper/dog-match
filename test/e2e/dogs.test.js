@@ -74,4 +74,17 @@ describe('end to end tests of Dogs route', () => {
             });
 
     });
+
+    it('deletes a dog by id', () => {
+        const createdDogs = getDogs();
+
+        return request(app)
+            .delete(`/api/dogs/${createdDogs[1]._id}`)
+            .then(() => request(app).get('/api/dogs'))
+            .then(res => {
+                expect(res.body).not.toContainEqual(createdDogs[1]);
+                expect(res.body).toContainEqual(createdDogs[0]);
+                expect(res.body).toContainEqual(createdDogs[2]);
+            });
+    });
 });
