@@ -87,4 +87,52 @@ describe('end to end tests of Dogs route', () => {
                 expect(res.body).toContainEqual(createdDogs[2]);
             });
     });
+
+    it('updates a dog by id', () => {
+        const createdUsers = getUsers();
+        const createdDogs = getDogs();
+
+        return request(app)
+            .put(`/api/dogs/${createdDogs[1]._id}`)
+            .send({
+                name: 'Floof4',
+                description: 'Fluffy little friend',
+                weightInLbs: 6,
+                predictedWeight: 15,
+                price: 500,
+                photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+                age: {
+                    number: 6,
+                    unit: 'months'
+                },
+                spayedOrNeutered: true,
+                personalityAttributes: ['loving', 'playful'],
+                healthIssues: ['dental'],
+                healthRating: 4,
+                healthDetails: 'Has a cavity',
+                dogProvider: createdUsers[2]._id         
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    _id: createdDogs[1]._id,
+                    name: 'Floof4',
+                    description: 'Fluffy little friend',
+                    weightInLbs: 6,
+                    predictedWeight: 15,
+                    price: 500,
+                    photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+                    age: {
+                        number: 6,
+                        unit: 'months'
+                    },
+                    spayedOrNeutered: true,
+                    personalityAttributes: ['loving', 'playful'],
+                    healthIssues: ['dental'],
+                    healthRating: 4,
+                    healthDetails: 'Has a cavity',
+                    dogProvider: createdUsers[2]._id   
+                });            
+            });
+            
+    });
 });

@@ -97,7 +97,8 @@ describe('end to end tests of Users route', () => {
                     city: 'Portland',
                     state: 'OR',
                     zip: 97220
-                }            })
+                }            
+            })
             .then(res => {
                 expect(res.body).toEqual({
                     _id: expect.any(String),
