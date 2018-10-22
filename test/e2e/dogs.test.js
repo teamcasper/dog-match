@@ -115,6 +115,7 @@ describe('end to end tests of Dogs route', () => {
             .then(res => {
                 expect(res.body).toEqual({
                     _id: createdDogs[1]._id,
+                    __v: expect.any(Number),
                     name: 'Floof4',
                     description: 'Fluffy little friend',
                     weightInLbs: 6,
@@ -130,7 +131,8 @@ describe('end to end tests of Dogs route', () => {
                     healthIssues: ['dental'],
                     healthRating: 4,
                     healthDetails: 'Has a cavity',
-                    dogProvider: createdUsers[2]._id   
+                    dogProvider: createdUsers[2]._id,
+                    breed: null  
                 });            
             });
             
