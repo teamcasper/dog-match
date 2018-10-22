@@ -16,7 +16,12 @@ beforeEach(() => {
     return dropCollection('breeds');
 });
 
+beforeEach(() => {
+    return dropCollection('matches');
+});
+
 let createdUsers;
+let createdMatches;
 let createdBreeds;
 let createdDogs;
 
@@ -73,6 +78,30 @@ let users = [
         password: 'soak123'
     }
 ];
+
+let matches = [
+    {
+        seeker:  Types.ObjectId(),
+        provider: Types.ObjectId(),
+        dog: Types.ObjectId(),
+        datePosted: Date('May 1, 2018'),
+        dateFulfilled: Date('June 1, 2018'),
+        feePaid: 100.00
+    },
+    {
+        seeker:  Types.ObjectId(),
+        provider: Types.ObjectId(),
+        dog: Types.ObjectId(),
+        datePosted: Date('Jan 15, 2017'),
+        dateFulfilled: Date('March 1, 2017'),
+        feePaid: 100.00
+    },
+    {
+        seeker:  Types.ObjectId(),
+        provider: Types.ObjectId(),
+        dog: Types.ObjectId(),
+        datePosted: Date('April 4, 2017'),
+    }
 
 let breeds = [
     {
@@ -167,10 +196,17 @@ const createUser = user => {
         .then(res => res.body);
 };
 
+const createMatch = match => {
+    return request(app)
+        .post('/api/matches')
+        .send(match)
+};
+
 const createBreed = breed => {
     return request(app)
         .post('/api/breeds')
         .send(breed)
+};
 
 const createDog = dog => {
     return request(app)
