@@ -12,7 +12,7 @@ describe('end to end tests of Users route', () => {
                 fullName: 'Douglas Fir',
                 preferredName: 'Doug',
                 email: 'dfir2@gmail.com',
-                role: 'dog-seeker',
+                role: 'user',
                 preferredContact: {
                     text: 5035554444,
                     comments: 'Nights and weekends are best'
@@ -30,7 +30,7 @@ describe('end to end tests of Users route', () => {
                     fullName: 'Douglas Fir',
                     preferredName: 'Doug',
                     email: 'dfir2@gmail.com',
-                    role: 'dog-seeker',
+                    role: 'user',
                     preferredContact: {
                         text: 5035554444,
                         comments: 'Nights and weekends are best'
