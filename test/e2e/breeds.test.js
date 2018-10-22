@@ -39,6 +39,17 @@ describe('end to end test for breed routes', () => {
             });
     });
 
+    it('gets a breed by id', () => {
+        const createdBreeds = getBreeds();
+        return request(app)
+            .get(`/api/breeds/${createdBreeds[0]._id}`)
+            .then(({ body }) => {
+                expect(body).toEqual({ ...createdBreeds[0] });
+            });
+
+    });
+
+
 
 
 });
