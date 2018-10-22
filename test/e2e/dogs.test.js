@@ -63,4 +63,15 @@ describe('end to end tests of Dogs route', () => {
                 expect(res.body).toContainEqual(createdDogs[2]);
             });
     });
+
+    it('gets a dog by id', () => {
+        const createdDogs = getDogs();
+
+        return request(app)
+            .get(`/api/dogs/${createdDogs[1]._id}`)
+            .then(res => {
+                expect(res.body).toEqual(createdDogs[1]);
+            });
+
+    });
 });
