@@ -228,9 +228,9 @@ beforeEach(() => {
 });
   
 beforeEach(() => {
-     return Promise.all(breeds.map(createBreed)).then(breedRes => {
+    return Promise.all(breeds.map(createBreed)).then(breedRes => {
         createdBreeds = breedRes;
-     });
+    });
 });
 
 beforeEach(() => {
