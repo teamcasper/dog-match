@@ -1,5 +1,6 @@
 const { getErrors } = require('./helpers/getErrors');
 const Dog = require('../../lib/models/Dog');
+const { Types } = require('mongoose');
 
 describe('Dog Model', () => {
     it('accepts a valid dog when passed', () => {
@@ -18,7 +19,8 @@ describe('Dog Model', () => {
             personalityAttributes: ['loving', 'playful'],
             healthIssues: ['dental', 'vision'],
             healthRating: 4,
-            healthDetails: 'Has a cavity, slight loss of vision in left eye'
+            healthDetails: 'Has a cavity, slight loss of vision in left eye',
+            dogProvider: Types.ObjectId()
         };
 
         const dog = new Dog(data);
@@ -31,7 +33,7 @@ describe('Dog Model', () => {
             name: 'Floof'
         });
 
-        const errors = getErrors(dog.validateSync(), 5);
+        const errors = getErrors(dog.validateSync(), 6);
         expect(errors.description.properties.message).toEqual('Description is required.');
     });
 });
