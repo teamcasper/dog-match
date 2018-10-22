@@ -1,12 +1,9 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
+const { getUsers } = require('./helpers/seedData');
 
 describe('end to end tests of Users route', () => {
-
-    beforeEach(() => {
-        return dropCollection('users');
-    });
 
     it('posts a user', () => {
         return request(app)
@@ -14,7 +11,7 @@ describe('end to end tests of Users route', () => {
             .send({
                 fullName: 'Douglas Fir',
                 preferredName: 'Doug',
-                email: 'dfir@gmail.com',
+                email: 'dfir2@gmail.com',
                 role: 'dog-seeker',
                 preferredContact: {
                     text: 5035554444,
@@ -32,7 +29,7 @@ describe('end to end tests of Users route', () => {
                     _id: expect.any(String),
                     fullName: 'Douglas Fir',
                     preferredName: 'Doug',
-                    email: 'dfir@gmail.com',
+                    email: 'dfir2@gmail.com',
                     role: 'dog-seeker',
                     preferredContact: {
                         text: 5035554444,
@@ -45,5 +42,17 @@ describe('end to end tests of Users route', () => {
                     }
                 })
             })
+    });
+
+    it('gets all users', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .get('/api/users')
+            .then(res => {
+                expect(res.body).toContainEqual(createdUsers[0]);
+                expect(res.body).toContainEqual(createdUsers[1]);
+                expect(res.body).toContainEqual(createdUsers[2]);
+            });
     });
 });
