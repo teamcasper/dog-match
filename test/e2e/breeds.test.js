@@ -27,6 +27,18 @@ describe('end to end test for breed routes', () => {
             });
     });
 
+    it('gets all breeds', () => {
+        const createdBreeds = getBreeds();
+
+        return request(app)
+            .get('/api/breeds')
+            .then(res => {
+                expect(res.body).toContainEqual(createdBreeds[0]);
+                expect(res.body).toContainEqual(createdBreeds[1]);
+                expect(res.body).toContainEqual(createdBreeds[2]);
+            });
+    });
+
 
 
 });
