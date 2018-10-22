@@ -9,7 +9,12 @@ beforeEach(() => {
     return dropCollection('users');
 });
 
+beforeEach(() => {
+    return dropCollection('breeds');
+});
+
 let createdUsers;
+let createdBreeds;
 
 let users = [
     {
@@ -65,10 +70,47 @@ let users = [
     }
 ];
 
+let breeds = [
+    {
+        name: 'Samoyed',
+        weightRange: '41 to 50 lbs',
+        lifespan: 15,
+        temperament: ['energetic', 'friendly'],
+        coatTypes: 'Smooth',
+        hypoallergenic: true,
+        shed: true
+    },
+    {
+        name: 'German sheppard',
+        weightRange: '61 to 70 lbs',
+        lifespan: 14,
+        temperament: ['herder', 'protective'],
+        coatTypes: 'Smooth',
+        hypoallergenic: false,
+        shed: true
+    },
+    {
+        name: 'Yorky',
+        weightRange: '1 to 10 lbs',
+        lifespan: 13,
+        temperament: ['head strong', 'independent'],
+        coatTypes: 'Silky',
+        hypoallergenic: true,
+        shed: false
+    }
+];
+
 const createUser = user => {
     return request(app)
         .post('/api/users')
         .send(user)
+        .then(res => res.body);
+};
+
+const createdBreed = breed => {
+    return request(app)
+        .post('/api/breeds')
+        .send(breed)
         .then(res => res.body);
 };
 
@@ -78,8 +120,16 @@ beforeEach(() => {
     });
 });
 
+beforeEach(() => {
+    return Promise.all(breeds.map(createdBreed)).then(breedRes => {
+        createdBreeds = breedRes;
+    });
+});
+
 const getUsers = () => createdUsers;
+const getBreeds = () => createdBreeds;
 
 module.exports = {
-    getUsers
+    getUsers,
+    getBreeds
 };
