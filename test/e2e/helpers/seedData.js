@@ -16,7 +16,7 @@ let users = [
         fullName: 'Douglas Fir',
         preferredName: 'Doug',
         email: 'dfir@gmail.com',
-        role: 'dog-seeker',
+        role: 'user',
         preferredContact: {
             text: 5035554444,
             comments: 'Nights and weekends are best'
@@ -32,7 +32,7 @@ let users = [
         fullName: 'Willow Tree',
         preferredName: 'Willow',
         email: 'wtree@gmail.com',
-        role: 'dog-seeker',
+        role: 'user',
         preferredContact: {
             text: 5035552222
         },
@@ -47,7 +47,7 @@ let users = [
         fullName: 'Shady Oak',
         preferredName: 'Slim',
         email: 'soak@gmail.com',
-        role: 'dog-provider',
+        role: 'user',
         preferredContact: {
             text: 5035551111
         },
