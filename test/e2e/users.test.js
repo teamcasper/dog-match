@@ -79,4 +79,42 @@ describe('end to end tests of Users route', () => {
                 expect(res.body).toContainEqual(createdUsers[2]);
             });
     });
+
+    it('updates a user by id', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .put(`/api/reviewers/${createdUsers[1]._id}`)
+            .send({
+                fullName: 'Willow Tree2',
+                preferredName: 'Willow',
+                email: 'wtree@gmail.com',
+                role: 'user',
+                preferredContact: {
+                    text: 5035552222
+                },
+                address: {
+                    city: 'Portland',
+                    state: 'OR',
+                    zip: 97220
+                }            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    _id: expect.any(String),
+                    fullName: 'Willow Tree Revised',
+                    preferredName: 'Willow',
+                    email: 'wtree@gmail.com',
+                    role: 'user',
+                    preferredContact: {
+                        text: 5035552222
+                    },
+                    address: {
+                        city: 'Portland',
+                        state: 'OR',
+                        zip: 97220
+                    }
+                });            
+            });
+            
+    });
 });
