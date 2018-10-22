@@ -10,16 +10,6 @@
     "test:watch": "npm run jest -- --watch",
     "start": "nodemon index.js"
   },
-  "jest": {
-    "reporters": [
-      [
-        "jest-nyan-reporter",
-        {
-          "suppressErrorReporter": false
-        }
-      ]
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/teamcasper/dog-match"
