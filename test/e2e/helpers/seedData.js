@@ -102,6 +102,7 @@ let matches = [
         dog: Types.ObjectId(),
         datePosted: Date('April 4, 2017'),
     }
+];
 
 let breeds = [
     {
@@ -131,6 +132,7 @@ let breeds = [
         hypoallergenic: true,
         shed: false
     }
+];
 
 let dogs = [
     {
