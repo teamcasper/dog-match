@@ -84,9 +84,9 @@ describe('end to end tests of Users route', () => {
         const createdUsers = getUsers();
 
         return request(app)
-            .put(`/api/reviewers/${createdUsers[1]._id}`)
+            .put(`/api/users/${createdUsers[1]._id}`)
             .send({
-                fullName: 'Willow Tree2',
+                fullName: 'Willow Tree Revised',
                 preferredName: 'Willow',
                 email: 'wtree@gmail.com',
                 role: 'user',
@@ -112,7 +112,8 @@ describe('end to end tests of Users route', () => {
                         city: 'Portland',
                         state: 'OR',
                         zip: 97220
-                    }
+                    },
+                    businessInfo: null
                 });            
             });
             
