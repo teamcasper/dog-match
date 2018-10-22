@@ -16,13 +16,11 @@ describe('Breed model', () => {
         };
 
         const breed = new Breed(data);
-        
-
-
-
+        const jsonBreed = breed.toJSON();
+        expect(jsonBreed).toEqual({ ...data, _id: expect.any(Object) });
     });
 
-
+    
 
 
 
