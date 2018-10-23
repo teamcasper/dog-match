@@ -201,13 +201,15 @@ const createUser = user => {
 const createMatch = match => {
     return request(app)
         .post('/api/matches')
-        .send(match);
+        .send(match)
+        .then(res => res.body);
 };
 
 const createBreed = breed => {
     return request(app)
         .post('/api/breeds')
-        .send(breed);
+        .send(breed)
+        .then(res => res.body);
 };
 
 const createDog = dog => {
