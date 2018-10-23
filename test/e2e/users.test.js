@@ -165,6 +165,13 @@ describe('end to end tests of Users route', () => {
             .then(checkStatus(401));
     });
 
+    it('rejects a sign in with a bad email', () => {
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'bad@gmail.com', password: 'lalala' })
+            .then(checkStatus(401));
+    });
+
     it('gets all users', () => {
         const createdUsers = getUsers();
 
