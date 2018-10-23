@@ -72,7 +72,7 @@ let users = [
         address: {
             city: 'Portland',
             state: 'OR',
-            zip: 97209
+            zip: 97220
         },
         businessInfo: { 
             name: 'Oak Family Golden Retrievers',
@@ -80,6 +80,26 @@ let users = [
             type: 'breeder'
         },
         password: 'soak123'
+    },
+    {
+        fullName: 'User[3] near 97229',
+        preferredName: 'Artie',
+        email: 'artie@gmail.com',
+        role: 'user',
+        preferredContact: {
+            text: 5035551111
+        },
+        address: {
+            city: 'Portland',
+            state: 'OR',
+            zip: 97075
+        },
+        businessInfo: { 
+            name: 'Beaverton Dogs',
+            website: 'www.beavertondogs.com',
+            type: 'breeder'
+        },
+        password: 'mope123'
     }
 ];
 
@@ -193,6 +213,42 @@ let dogs = [
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
         dogProvider: Types.ObjectId()
     },
+    {
+        name: 'Floof4 dogs[3]',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
+    },
+    {
+        name: 'Floof5 dogs[4]',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        dogProvider: Types.ObjectId()
+    },
 ];
 
 const createUser = user => {
@@ -241,9 +297,13 @@ beforeEach(() => {
         dogs[0].dogProvider = createdUsers[1]._id;
         dogs[1].dogProvider = createdUsers[2]._id;
         dogs[2].dogProvider = createdUsers[2]._id;
+        dogs[3].dogProvider = createdUsers[3]._id;
+        dogs[4].dogProvider = createdUsers[3]._id;
         dogs[0].breed = [createdBreeds[0]._id];
         dogs[1].breed = [createdBreeds[1]._id];
         dogs[2].breed = [createdBreeds[2]._id];
+        dogs[3].breed = [createdBreeds[0]._id];
+        dogs[4].breed = [createdBreeds[1]._id];
     });
 });
 
