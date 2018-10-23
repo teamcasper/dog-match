@@ -202,6 +202,7 @@ const createMatch = match => {
     return request(app)
         .post('/api/matches')
         .send(match)
+        .then(res => res.body);
 };
 
 const createBreed = breed => {
@@ -236,9 +237,9 @@ beforeEach(() => {
         dogs[0].dogProvider = createdUsers[2]._id;
         dogs[1].dogProvider = createdUsers[2]._id;
         dogs[2].dogProvider = createdUsers[2]._id;
-        dogs[0].breed = [createdBreeds[0]._id]
-        dogs[1].breed = [createdBreeds[1]._id]
-        dogs[2].breed = [createdBreeds[2]._id]
+        dogs[0].breed = [createdBreeds[0]._id];
+        dogs[1].breed = [createdBreeds[1]._id];
+        dogs[2].breed = [createdBreeds[2]._id];
     });
 });
 
