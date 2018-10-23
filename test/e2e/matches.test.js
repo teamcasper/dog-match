@@ -50,16 +50,16 @@ describe('matches routes', () => {
             });
     });
 
-    // it('updates a match by id', () => {
-    //     const createdMatches = getMatches();
-    //     let data = createdMatches[1];
-    //     data.feePaid = 1000;
+    it('updates a match by id', () => {
+        const createdMatches = getMatches();
+        let data = createdMatches[1];
+        data.feePaid = 1000;
 
-    //     return request(app)
-    //         .put(`/api/matches/${createdMatches[1]._id}`)
-    //         .send({ data })
-    //         .then(res => {
-    //             expect(res.body).toEqual({ data });            
-    //         }); 
-    // });
+        return request(app)
+            .put(`/api/matches/${createdMatches[1]._id}`)
+            .send(data)
+            .then(res => {
+                expect(res.body).toEqual(data);            
+            }); 
+    });
 });
