@@ -187,7 +187,19 @@ describe('end to end tests of Users route', () => {
                 .then(checkStatus(401)));
     });
 
-    // it('verifies a signed in user')
+    it('verifies a signed in user', () => {
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'wtree@gmail.com', password: 'wtree123' })
+            .then(token => {
+                return request(app)
+                    .get('/api/users/verify')
+                    .set('Authorization', `Bearer ${token}`)
+                    .then(res => {
+                        expect(res.body).toEqual({ success: true })
+                    });
+            });
+    });
 
     it('gets all users', () => {
         const createdUsers = getUsers();
