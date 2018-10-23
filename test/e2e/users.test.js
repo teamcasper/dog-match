@@ -159,14 +159,10 @@ describe('end to end tests of Users route', () => {
     });
 
     it('rejects a sign in with a bad password', () => {
-        const createdUsers = getUsers();
         return request(app)
-            .post('/api/auth/signin')
-            .send({ email: createdUsers[0].email, password: 'badpassword' })
-            .then(res => {
-                checkOk(res);
-                expect(res.body.token).toEqual(expect.any(String));
-            });
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'badpassword' })
+            .then(checkStatus(401));
     });
 
     it('gets all users', () => {
