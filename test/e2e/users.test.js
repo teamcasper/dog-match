@@ -12,21 +12,7 @@ const checkStatus = statusCode => res => {
 
 const checkOk = res => checkStatus(200)(res);
 
-const withToken = user => {
-    return request(app)
-        .post('/api/users/signin')
-        .send({ email: `${user.email}`, password: `${user.password}` })
-        .then(res => res.body.token);
-};
-
 describe('end to end tests of Users route', () => {
-
-    // let token;
-    // beforeEach(() => {
-    //     return withToken(users[0]).then(createdToken => {
-    //         token = createdToken;
-    //     });
-    // });
 
     it('posts a user', () => {
         return request(app)
@@ -190,13 +176,13 @@ describe('end to end tests of Users route', () => {
     it('verifies a signed in user', () => {
         return request(app)
             .post('/api/users/signin')
-            .send({ email: 'wtree@gmail.com', password: 'wtree123' })
-            .then(token => {
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' })
+            .then(res => {
                 return request(app)
                     .get('/api/users/verify')
-                    .set('Authorization', `Bearer ${token}`)
+                    .set('Authorization', `Bearer ${res.body.token}`)
                     .then(res => {
-                        expect(res.body).toEqual({ success: true })
+                        expect(res.body).toEqual({ success: true });
                     });
             });
     });
