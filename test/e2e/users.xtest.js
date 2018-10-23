@@ -62,7 +62,7 @@ describe('end to end tests of Users route', () => {
                     zip: 97205
                 },
                 password: 'dfir123'
-             })
+            })
             .then(res => {
                 expect(res.body).toEqual({
                     _id: expect.any(String),
