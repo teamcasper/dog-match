@@ -1,3 +1,4 @@
+/* eslint-disable-next-line */
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
