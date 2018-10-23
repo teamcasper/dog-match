@@ -3,8 +3,8 @@ const getZipCodeData = require('../../lib/util/radius-middleware');
 
 describe('test the middleware that gets a radius of zip codes', () => {
 
-    it('sends back an HttpError if zip code is not provided', done => {
-        const req = { query: { zip: '' } } ;
+    it('sends back an HttpError if radius is provided but not zip', done => {
+        const req = { query: { radius: 5, zip: '' } } ;
 
         let error;
         const next = err => {

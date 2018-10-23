@@ -67,6 +67,27 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
+    it('gets all dogs for a radius around a zip code', () => {
+        const createdDogs = getDogs();
+        return request(app)
+            .get('/api/dogs?zip=97229&radius=5')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs[3]);
+                expect(res.body).toContainEqual(createdDogs[4]);
+            });
+    });
+
+    it('gets all dogs in a zip code', () => {
+        const createdDogs = getDogs();
+        return request(app)
+            .get('/api/dogs?zip=97220')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs[0]);
+                expect(res.body).toContainEqual(createdDogs[1]);
+                expect(res.body).toContainEqual(createdDogs[2]);
+            });
+    });
+
     it('gets a dog by id', () => {
         const createdDogs = getDogs();
 
