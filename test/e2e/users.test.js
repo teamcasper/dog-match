@@ -3,8 +3,21 @@ const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
 const User = require('../../lib/models/User');
-const { getUsers, getUsersArray } = require('./helpers/seedData');
+const { getUsers } = require('./helpers/seedData');
 const bcrypt = require('bcrypt');
+
+const checkStatus = statusCode => res => {
+    expect(res.status).toEqual(statusCode);
+};
+
+const checkOk = res => checkStatus(200)(res);
+
+// const withToken = user => {
+//     return request(app)
+//         .post('/api/users/signin')
+//         .send({ email: `${user.email}`, password: `${user.password}` })
+//         .then(res => res.body.token);
+// };
 
 describe('end to end tests of Users route', () => {
 
@@ -132,6 +145,16 @@ describe('end to end tests of Users route', () => {
             .then(createdUser => {
                 expect(createdUser.compare(user.password)).toBeTruthy();
                 expect(createdUser.compare('543lkj')).toBeFalsy();
+            });
+    });
+
+    it('signs in a user', () => {
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' })
+            .then(res => {
+                checkOk(res);
+                expect(res.body.token).toEqual(expect.any(String));
             });
     });
 
