@@ -269,10 +269,12 @@ const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
 const getDogs = () => createdDogs;
 const getMatches = () => createdMatches;
+const getUsersArray = () => users;
 
 module.exports = {
     getUsers,
     getBreeds,
     getDogs,
-    getMatches
+    getMatches,
+    getUsersArray
 };

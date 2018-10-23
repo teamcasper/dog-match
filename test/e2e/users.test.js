@@ -2,7 +2,7 @@ const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
 const User = require('../../lib/models/User');
-const { getUsers } = require('./helpers/seedData');
+const { getUsers, getUsersArray } = require('./helpers/seedData');
 const bcrypt = require('bcrypt');
 
 describe('end to end tests of Users route', () => {
@@ -41,7 +41,8 @@ describe('end to end tests of Users route', () => {
                         city: 'Portland',
                         state: 'OR',
                         zip: 97205
-                    }
+                    },
+                    passwordHash: expect.any(String)
                 });
             });
     });
@@ -80,7 +81,8 @@ describe('end to end tests of Users route', () => {
                         city: 'Portland',
                         state: 'OR',
                         zip: 97205
-                    }
+                    },
+                    passwordHash: expect.any(String)
                 });
             });
     });
@@ -88,23 +90,32 @@ describe('end to end tests of Users route', () => {
     it('hashes a user\'s password', () => {
         return User.create({
             fullName: 'Douglas Fir',
-                preferredName: 'Doug',
-                email: 'dfir2@gmail.com',
-                role: 'user',
-                preferredContact: {
-                    text: 5035554444,
-                    comments: 'Nights and weekends are best'
-                },
-                address: {
-                    city: 'Portland',
-                    state: 'OR',
-                    zip: 97205
-                },
-                password: 'dfir123'
+            preferredName: 'Doug',
+            email: 'dfir2@gmail.com',
+            role: 'user',
+            preferredContact: {
+                text: 5035554444,
+                comments: 'Nights and weekends are best'
+            },
+            address: {
+                city: 'Portland',
+                state: 'OR',
+                zip: 97205
+            },
+            password: 'dfir123'
         }).then(user => {
             expect(user.password).not.toEqual('dfir123');
             expect(bcrypt.compareSync('dfir123', user.passwordHash));
         })
+    });
+
+    it('compares passwords', () => {
+        const createdUsers = getUsers();
+        const users = getUsersArray();
+        const validPassword = users[0].password;
+        const invalidPassword = `${validPassword}not`;
+
+        expect(bcrypt.compareSync(validPassword, createdUsers[0].passwordHash));
     });
 
     it('gets all users', () => {
@@ -177,7 +188,8 @@ describe('end to end tests of Users route', () => {
                         state: 'OR',
                         zip: 97220
                     },
-                    businessInfo: null
+                    businessInfo: null,
+                    passwordHash: expect.any(String)
                 });            
             });
             
