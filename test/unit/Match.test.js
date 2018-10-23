@@ -26,5 +26,4 @@ describe('Match Model', () => {
         const errors = getErrors(match.validateSync(), 1);
         expect(errors.seeker.properties.message).toEqual('Path `seeker` is required.');
     });
-
 });

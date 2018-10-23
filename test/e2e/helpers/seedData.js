@@ -20,6 +20,10 @@ beforeEach(() => {
     return dropCollection('matches');
 });
 
+beforeEach(() => {
+    return dropCollection('breeds');
+});
+
 let createdUsers;
 let createdMatches;
 let createdBreeds;
