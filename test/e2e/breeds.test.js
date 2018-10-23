@@ -18,8 +18,8 @@ describe('end to end test for breed routes', () => {
         return request(app)
             .post('/api/breeds')
             .send(breed)
-            .then(({ body }) => {
-                expect(body).toEqual({
+            .then(res => {
+                expect(res.body).toEqual({
                     ...breed,
                     _id: expect.any(String),
                     __v: expect.any(Number)
@@ -43,8 +43,8 @@ describe('end to end test for breed routes', () => {
         const createdBreeds = getBreeds();
         return request(app)
             .get(`/api/breeds/${createdBreeds[0]._id}`)
-            .then(({ body }) => {
-                expect(body).toEqual({ ...createdBreeds[0] });
+            .then(res => {
+                expect(res.body).toEqual({ ...createdBreeds[0] });
             });
 
     });
