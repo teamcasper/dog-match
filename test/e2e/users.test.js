@@ -12,14 +12,21 @@ const checkStatus = statusCode => res => {
 
 const checkOk = res => checkStatus(200)(res);
 
-// const withToken = user => {
-//     return request(app)
-//         .post('/api/users/signin')
-//         .send({ email: `${user.email}`, password: `${user.password}` })
-//         .then(res => res.body.token);
-// };
+const withToken = user => {
+    return request(app)
+        .post('/api/users/signin')
+        .send({ email: `${user.email}`, password: `${user.password}` })
+        .then(res => res.body.token);
+};
 
 describe('end to end tests of Users route', () => {
+
+    // let token;
+    // beforeEach(() => {
+    //     return withToken(users[0]).then(createdToken => {
+    //         token = createdToken;
+    //     });
+    // });
 
     it('posts a user', () => {
         return request(app)
@@ -165,12 +172,22 @@ describe('end to end tests of Users route', () => {
             .then(checkStatus(401));
     });
 
-    it('rejects a sign in with a bad email', () => {
+    it('rejects a sign in with a token but bad password', () => {
+        let token;
         return request(app)
             .post('/api/users/signin')
-            .send({ email: 'bad@gmail.com', password: 'lalala' })
-            .then(checkStatus(401));
+            .send({ email: 'wtree@gmail.com', password: 'wtree123' })
+            .then(res => {
+                token = res;
+            })
+            .then(request(app)
+                .post('/api/users/signin')
+                .set('Authorization', `Bearer ${token}`)
+                .send({ email: 'dfir@gmail.com', password: 'dfir12345' })
+                .then(checkStatus(401)));
     });
+
+    // it('verifies a signed in user')
 
     it('gets all users', () => {
         const createdUsers = getUsers();
