@@ -24,6 +24,7 @@ beforeEach(() => {
     return dropCollection('breeds');
 });
 
+let token = null;
 let createdUsers;
 let createdMatches;
 let createdBreeds;
@@ -265,17 +266,21 @@ beforeEach(() => {
     });
 });
 
-const getUsers = () => createdUsers;
-const getBreeds = () => createdBreeds;
-const getDogs = () => createdDogs;
-const getMatches = () => createdMatches;
-const getToken = () => {
+beforeEach(() => {
     return Promise.resolve(
         request(app)
             .post('/api/users/signin')
             .send({ email: 'dfir@gmail.com', password: 'dfir123' }))
-        .then(res => res.body.token);
-};
+        .then(res => {
+            token = res.body.token;
+        });
+});
+
+const getUsers = () => createdUsers;
+const getBreeds = () => createdBreeds;
+const getDogs = () => createdDogs;
+const getMatches = () => createdMatches;
+const getToken = () => token;
 
 module.exports = {
     getUsers,
