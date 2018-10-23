@@ -20,6 +20,10 @@ beforeEach(() => {
     return dropCollection('matches');
 });
 
+beforeEach(() => {
+    return dropCollection('breeds');
+});
+
 let createdUsers;
 let createdMatches;
 let createdBreeds;
@@ -201,13 +205,14 @@ const createUser = user => {
 const createMatch = match => {
     return request(app)
         .post('/api/matches')
-        .send(match)
+        .send(match);
 };
 
 const createBreed = breed => {
     return request(app)
         .post('/api/breeds')
         .send(breed)
+        .then(res => res.body);
 };
 
 const createDog = dog => {
@@ -224,9 +229,9 @@ beforeEach(() => {
 });
   
 beforeEach(() => {
-     return Promise.all(breeds.map(createBreed)).then(breedRes => {
+    return Promise.all(breeds.map(createBreed)).then(breedRes => {
         createdBreeds = breedRes;
-     });
+    });
 });
 
 beforeEach(() => {
@@ -237,6 +242,7 @@ beforeEach(() => {
         dogs[2].dogProvider = createdUsers[2]._id;
     });
 });
+
 
 const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
