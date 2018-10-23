@@ -269,10 +269,18 @@ const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
 const getDogs = () => createdDogs;
 const getMatches = () => createdMatches;
+const getToken = () => {
+    return Promise.resolve(
+        request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' }))
+        .then(res => res.body.token);
+};
 
 module.exports = {
     getUsers,
     getBreeds,
     getDogs,
-    getMatches
+    getMatches,
+    getToken
 };
