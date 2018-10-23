@@ -49,6 +49,43 @@ describe('end to end test for breed routes', () => {
 
     });
 
+    it('deletes a breed by id', () => {
+        const createdBreeds = getBreeds();
+        
+        return request(app)
+            .delete(`/api/breeds/${createdBreeds[0]._id}`)
+            .then(({ body }) => expect(body).toEqual({ removed: true }));
+    });        
+
+    it('updates a breed by id', () => {
+        const createdBreeds = getBreeds();
+        
+        return request(app)
+            .put(`/api/breeds/${createdBreeds[0]._id}`)
+            .send({
+                name: 'German sheppard',
+                weightRange: '41 to 50 lbs',
+                lifespan: 15,
+                temperament: ['energetic', 'friendly'],
+                coatTypes: 'Double',
+                hypoallergenic: false,
+                shed: true
+            })
+            .then(({ body }) => {
+                expect(body).toEqual({
+                    _id: expect.any(String),
+                    name: 'German sheppard',
+                    weightRange: '41 to 50 lbs',
+                    lifespan: 15,
+                    temperament: ['energetic', 'friendly'],
+                    coatTypes: 'Double',
+                    hypoallergenic: false,
+                    shed: true
+                });
+            });
+    });
+
+
 
 
 
