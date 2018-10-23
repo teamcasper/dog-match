@@ -1,4 +1,4 @@
-const zipApi = require('../../lib/util/zip-api');
+const zipApi = require('../../lib/util/zip-radius-api');
 
 describe('test zip-api', () => {
 
