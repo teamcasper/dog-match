@@ -44,6 +44,45 @@ describe('end to end tests of Users route', () => {
             });
     });
 
+    it('creates a user on signup', () => {
+        return request(app)
+            .post('/api/users/signup')
+            .send({ 
+                fullName: 'Douglas Fir',
+                preferredName: 'Doug',
+                email: 'dfir2@gmail.com',
+                role: 'user',
+                preferredContact: {
+                    text: 5035554444,
+                    comments: 'Nights and weekends are best'
+                },
+                address: {
+                    city: 'Portland',
+                    state: 'OR',
+                    zip: 97205
+                },
+                password: 'dfir123'
+             })
+            .then(res => {
+                expect(res.body).toEqual({
+                    _id: expect.any(String),
+                    fullName: 'Douglas Fir',
+                    preferredName: 'Doug',
+                    email: 'dfir2@gmail.com',
+                    role: 'user',
+                    preferredContact: {
+                        text: 5035554444,
+                        comments: 'Nights and weekends are best'
+                    },
+                    address: {
+                        city: 'Portland',
+                        state: 'OR',
+                        zip: 97205
+                    }
+                });
+            });
+    });
+
     it('gets all users', () => {
         const createdUsers = getUsers();
 
@@ -119,4 +158,12 @@ describe('end to end tests of Users route', () => {
             });
             
     });
+
+    // it('creates a user on signup', () => {
+    //     return request(app)
+    //         .post('api/auth/signup')
+    //         .send({
+
+    //         })
+    // });
 });
