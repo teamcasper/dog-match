@@ -21,10 +21,10 @@ describe('Match Model', () => {
         });
     });
 
-    // it('validates that a seeker is required', () => {
-    //     const match = new Match({});
-    //     const errors = getErrors(match.validateSync(), 1);
-    //     expect(errors.seeker.properties.message).toEqual('Path `seeker` is required.');
-    // });
+    it('validates that a seeker is required', () => {
+        const match = new Match({});
+        const errors = getErrors(match.validateSync(), 1);
+        expect(errors.seeker.properties.message).toEqual('Path `seeker` is required.');
+    });
 
 });
