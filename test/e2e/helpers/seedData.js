@@ -218,8 +218,10 @@ const createBreed = breed => {
 };
 
 const createDog = dog => {
+    token = getToken();
     return request(app)
         .post('/api/dogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(dog)
         .then(res => res.body);
 };
