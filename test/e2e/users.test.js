@@ -111,76 +111,72 @@ describe('end to end tests of Users route', () => {
     });
 
     it('compares passwords', () => {
-        Promise.all([
-            getUsers(),
-            getUsersArray()
-        ])
-            .then(([createdUsers, users]) => {
-                expect(createdUsers[0].compare(users[0].password)).toBeTruthy();
-                expect(createdUsers[0].compare('543lkj')).toBeFalsy();
-            });
-    });
-        
-});
-
-it('gets all users', () => {
-    const createdUsers = getUsers();
-
-    return request(app)
-        .get('/api/users')
-        .then(res => {
-            expect(res.body).toContainEqual(createdUsers[0]);
-            expect(res.body).toContainEqual(createdUsers[1]);
-            expect(res.body).toContainEqual(createdUsers[2]);
-        });
-});
-
-it('gets a user by id', () => {
-    const createdUsers = getUsers();
-
-    return request(app)
-        .get(`/api/users/${createdUsers[1]._id}`)
-        .then(res => {
-            expect(res.body).toEqual(createdUsers[1]);
-        });
-
-});
-
-it('deletes a user by id', () => {
-    const createdUsers = getUsers();
-
-    return request(app)
-        .delete(`/api/users/${createdUsers[1]._id}`)
-        .then(() => request(app).get('/api/users'))
-        .then(res => {
-            expect(res.body).not.toContainEqual(createdUsers[1]);
-            expect(res.body).toContainEqual(createdUsers[0]);
-            expect(res.body).toContainEqual(createdUsers[2]);
-        });
-});
-
-it('updates a user by id', () => {
-    const createdUsers = getUsers();
-
-    return request(app)
-        .put(`/api/users/${createdUsers[1]._id}`)
-        .send({
-            fullName: 'Willow Tree Revised',
-            preferredName: 'Willow',
-            email: 'wtree@gmail.com',
+        const user = {
+            fullName: 'Douglas Fir',
+            preferredName: 'Doug',
+            email: 'dfir2@gmail.com',
             role: 'user',
             preferredContact: {
-                text: 5035552222
+                text: 5035554444,
+                comments: 'Nights and weekends are best'
             },
             address: {
                 city: 'Portland',
                 state: 'OR',
-                zip: 97220
-            }            
-        })
-        .then(res => {
-            expect(res.body).toEqual({
-                _id: expect.any(String),
+                zip: 97205
+            },
+            password: 'dfir123'
+        };
+        
+        User.create(user)
+            .then(createdUser => {
+                expect(createdUser.compare(user.password)).toBeTruthy();
+                expect(createdUser.compare('543lkj')).toBeFalsy();
+            });
+    });
+
+    it('gets all users', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .get('/api/users')
+            .then(res => {
+                expect(res.body).toContainEqual(createdUsers[0]);
+                expect(res.body).toContainEqual(createdUsers[1]);
+                expect(res.body).toContainEqual(createdUsers[2]);
+            });
+    });
+
+    it('gets a user by id', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .get(`/api/users/${createdUsers[1]._id}`)
+            .then(res => {
+                expect(res.body).toEqual(createdUsers[1]);
+            });
+
+    });
+
+    it('deletes a user by id', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .delete(`/api/users/${createdUsers[1]._id}`)
+            .then(() => request(app).get('/api/users'))
+            .then(res => {
+                expect(res.body).not.toContainEqual(createdUsers[1]);
+                expect(res.body).toContainEqual(createdUsers[0]);
+                expect(res.body).toContainEqual(createdUsers[2]);
+            });
+    });
+
+    it('updates a user by id', () => {
+        const createdUsers = getUsers();
+
+        return request(app)
+            .put(`/api/users/${createdUsers[1]._id}`)
+            .send({
                 fullName: 'Willow Tree Revised',
                 preferredName: 'Willow',
                 email: 'wtree@gmail.com',
@@ -192,12 +188,26 @@ it('updates a user by id', () => {
                     city: 'Portland',
                     state: 'OR',
                     zip: 97220
-                },
-                businessInfo: null,
-                passwordHash: expect.any(String)
-            });            
-        });
-            
+                }            
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    _id: expect.any(String),
+                    fullName: 'Willow Tree Revised',
+                    preferredName: 'Willow',
+                    email: 'wtree@gmail.com',
+                    role: 'user',
+                    preferredContact: {
+                        text: 5035552222
+                    },
+                    address: {
+                        city: 'Portland',
+                        state: 'OR',
+                        zip: 97220
+                    },
+                    businessInfo: null,
+                    passwordHash: expect.any(String)
+                });            
+            });
+    });
 });
-
-
