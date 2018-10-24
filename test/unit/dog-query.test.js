@@ -111,4 +111,27 @@ describe('dog query', () => {
             });
         });
     });
+
+    describe('by predicted weight', () => {
+        it('returns query for dogs in a predicted weight range', () => {
+            const query = { minPredictedWeight: 5, maxPredictedWeight: 20 };
+            expect(dogQuery(query)).toEqual({
+                predictedWeight: { $gte: 5, $lte: 20 }
+            });
+        });
+        
+        it('returns query for dogs with a max predicted weight only', () => {
+            const query = { maxPredictedWeight: 20 };
+            expect(dogQuery(query)).toEqual({
+                predictedWeight: { $lte: 20 }
+            });
+        });
+
+        it('returns query for dogs with a min predicted weight only', () => {
+            const query = { minPredictedWeight: 5 };
+            expect(dogQuery(query)).toEqual({
+                predictedWeight: { $gte: 5 }
+            });
+        });
+    });
 });
