@@ -21,10 +21,7 @@ describe('end to end tests of Dogs route', () => {
                     predictedWeight: 15,
                     price: 500,
                     photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-                    age: {
-                        number: 6,
-                        unit: 'months'
-                    },
+                    ageInMonths: 6,
                     spayedOrNeutered: true,
                     personalityAttributes: ['loving', 'playful'],
                     healthIssues: ['dental', 'vision'],
@@ -43,10 +40,7 @@ describe('end to end tests of Dogs route', () => {
                         predictedWeight: 15,
                         price: 500,
                         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-                        age: {
-                            number: 6,
-                            unit: 'months'
-                        },
+                        ageInMonths: 6,
                         spayedOrNeutered: true,
                         personalityAttributes: ['loving', 'playful'],
                         healthIssues: ['dental', 'vision'],
@@ -69,10 +63,7 @@ describe('end to end tests of Dogs route', () => {
                 predictedWeight: 15,
                 price: 500,
                 photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-                age: {
-                    number: 6,
-                    unit: 'months'
-                },
+                ageInMonths: 6,
                 spayedOrNeutered: true,
                 personalityAttributes: ['loving', 'playful'],
                 healthIssues: ['dental', 'vision'],
@@ -191,10 +182,7 @@ describe('end to end tests of Dogs route', () => {
                     predictedWeight: 15,
                     price: 500,
                     photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-                    age: {
-                        number: 6,
-                        unit: 'months'
-                    },
+                    ageInMonths: 6,
                     spayedOrNeutered: true,
                     personalityAttributes: ['loving', 'playful'],
                     healthIssues: ['dental'],
@@ -211,10 +199,7 @@ describe('end to end tests of Dogs route', () => {
                         predictedWeight: 15,
                         price: 500,
                         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-                        age: {
-                            number: 6,
-                            unit: 'months'
-                        },
+                        ageInMonths: 6,
                         spayedOrNeutered: true,
                         personalityAttributes: ['loving', 'playful'],
                         healthIssues: ['dental'],
@@ -242,10 +227,7 @@ describe('end to end tests of Dogs route', () => {
                     predictedWeight: 15,
                     price: 500,
                     photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-                    age: {
-                        number: 6,
-                        unit: 'months'
-                    },
+                    ageInMonths: 6,
                     spayedOrNeutered: true,
                     personalityAttributes: ['loving', 'playful'],
                     healthIssues: ['dental'],
