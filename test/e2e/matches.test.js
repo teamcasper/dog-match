@@ -39,7 +39,7 @@ describe('matches routes', () => {
     });
 
     // it('deletes a match by id', () => {
-    //     const token = getToken();
+    //     const token = getToken0();
     //     const createdMatches = getMatches();
 
     //     if(token) {
