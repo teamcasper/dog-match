@@ -96,7 +96,7 @@ let users = [
         address: {
             city: 'Portland',
             state: 'OR',
-            zip: 97212
+            zip: 97216
         },
         businessInfo: { 
             name: 'Portland Dogs',
