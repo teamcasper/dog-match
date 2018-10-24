@@ -28,7 +28,8 @@ describe('end to end tests of Dogs route', () => {
                     healthIssues: ['dental', 'vision'],
                     healthRating: 4,
                     healthDetails: 'Has a cavity, slight loss of vision in left eye',
-                    breed: [createdBreeds[1]._id, createdBreeds[2]._id]
+                    breed: [createdBreeds[1]._id, createdBreeds[2]._id],
+                    gender: 'female'
                 })
                 .then(res => {
                     expect(res.body).toEqual({
@@ -47,7 +48,8 @@ describe('end to end tests of Dogs route', () => {
                         healthIssues: ['dental', 'vision'],
                         healthRating: 4,
                         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-                        dogProvider: createdUsers[0]._id
+                        dogProvider: createdUsers[0]._id,
+                        gender: 'female'
                     });
                 });
         }    
@@ -70,7 +72,8 @@ describe('end to end tests of Dogs route', () => {
                 healthIssues: ['dental', 'vision'],
                 healthRating: 4,
                 healthDetails: 'Has a cavity, slight loss of vision in left eye',
-                breed: [createdBreeds[1]._id, createdBreeds[2]._id]
+                breed: [createdBreeds[1]._id, createdBreeds[2]._id],
+                gender: 'female'
             })
             .then(res => {
                 expect(res.body).toEqual({ error: 'Missing token' });            
@@ -194,6 +197,7 @@ describe('end to end tests of Dogs route', () => {
                     healthIssues: ['dental'],
                     healthRating: 4,
                     healthDetails: 'Has a cavity',
+                    gender: 'female'
                 })
                 .then(res => {
                     expect(res.body).toEqual({
@@ -212,7 +216,8 @@ describe('end to end tests of Dogs route', () => {
                         healthRating: 4,
                         healthDetails: 'Has a cavity',
                         dogProvider: createdUsers[0]._id,
-                        breed: null  
+                        breed: null,
+                        gender: 'female'
                     });            
                 });
         }           
@@ -239,6 +244,7 @@ describe('end to end tests of Dogs route', () => {
                     healthIssues: ['dental'],
                     healthRating: 4,
                     healthDetails: 'Has a cavity',
+                    gender: 'female'
                 })
                 .then(res => {
                     expect(res.body).toEqual({ error: 'You are not authorized to make this change' });            

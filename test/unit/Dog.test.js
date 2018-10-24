@@ -17,7 +17,8 @@ describe('Dog Model', () => {
             healthIssues: ['dental', 'vision'],
             healthRating: 4,
             healthDetails: 'Has a cavity, slight loss of vision in left eye',
-            dogProvider: Types.ObjectId()
+            dogProvider: Types.ObjectId(),
+            gender: 'female'
         };
 
         const dog = new Dog(data);
@@ -30,7 +31,7 @@ describe('Dog Model', () => {
             name: 'Floof'
         });
 
-        const errors = getErrors(dog.validateSync(), 6);
+        const errors = getErrors(dog.validateSync(), 7);
         expect(errors.description.properties.message).toEqual('Description is required.');
         expect(errors.weight.properties.message).toEqual('Weight in lbs is required.');
     });

@@ -190,6 +190,7 @@ let dogs0 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'female'
     },
     {
         name: 'Floof2',
@@ -207,6 +208,7 @@ let dogs0 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'female'
     },
     {
         name: 'Floof3',
@@ -224,6 +226,7 @@ let dogs0 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'male'
     }
 ];
 
@@ -244,6 +247,7 @@ let dogs3 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'female'
     },
     {
         name: 'Floof5 dogs[4]',
@@ -261,6 +265,7 @@ let dogs3 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'other'
     }
 ];
 
@@ -281,6 +286,7 @@ let dogs4 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'female'
     }
 ];
 
