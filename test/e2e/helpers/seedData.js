@@ -289,6 +289,7 @@ let dogs4 = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
+        gender: 'female'
     }
 ];
 
