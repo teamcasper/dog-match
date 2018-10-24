@@ -275,7 +275,7 @@ const createDog0 = dog => {
 };
 
 const createDog3 = dog => {
-    let token = getToken0();
+    let token = getToken3();
     return request(app)
         .post('/api/dogs')
         .set('Authorization', `Bearer ${token}`)
