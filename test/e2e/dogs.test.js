@@ -88,7 +88,7 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
-    it('gets all dogs in a city by zip code', () => {
+    it.skip('gets all dogs in a city by zip code', () => {
         const createdDogs = getDogs();
         return request(app)
             .get('/api/dogs?zip=97220&citySearch=true')
