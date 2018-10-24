@@ -35,10 +35,56 @@ describe('dog query', () => {
     });
 
     describe('by personality attributes', () => {
-        it('returns a query for dogs with selected personality attributes', () => {
-            const query = { personalityAttributes: 'loving,playful' };
+        it('returns a query for dogs with any of the selected personality attributes', () => {
+            const query = { 
+                searchType: 'or',
+                personalityAttributes: 'loving,playful' 
+            };
             expect(dogQuery(query)).toEqual({ 
                 personalityAttributes: { $in: ['loving', 'playful'] } 
+            });
+        });
+
+        it('returns a query for dogs with all of the selected personality attributes', () => {
+            const query = { 
+                searchType: 'and',
+                personalityAttributes: 'loving,playful' 
+            };
+            expect(dogQuery(query)).toEqual({ 
+                personalityAttributes: { $all: ['loving', 'playful'] } 
+            });
+        });
+
+        it('returns a query for dogs with none of the selected personality attributes', () => {
+            const query = { 
+                searchType: 'not',
+                personalityAttributes: 'anxious,protective' 
+            };
+            expect(dogQuery(query)).toEqual({ 
+                personalityAttributes: { $nin: ['anxious', 'protective'] } 
+            });
+        });
+    });
+
+    describe('by health rating', () => {
+        it('returns query for dogs in a health rating range', () => {
+            const query = { minHealth: '3', maxHealth: '4' };
+            expect(dogQuery(query)).toEqual({
+                healthRating: { $gte: 3, $lte: 4 }
+            });
+        });
+        
+        it('returns query for dogs with a max health only', () => {
+            const query = { maxHealth: '4' };
+            expect(dogQuery(query)).toEqual({
+                healthRating: { $lte: 4 }
+            });
+        });
+
+        it('returns query for dogs with a min health only', () => {
+            const query = { minHealth: '4' };
+            expect(dogQuery(query)).toEqual({
+                healthRating: { $gte: 4 }
             });
         });
     });
