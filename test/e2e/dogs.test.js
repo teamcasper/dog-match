@@ -2,10 +2,10 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getDogs0, getUsers, getBreeds, getToken0 } = require('./helpers/seedData');
+const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3, getToken4 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
-    it('posts a dog', () => {
+    it.skip('posts a dog', () => {
         const token = getToken0();
         const createdUsers = getUsers();
         const createdBreeds = getBreeds(); 
@@ -56,8 +56,6 @@ describe('end to end tests of Dogs route', () => {
                 });
         }    
     });
-        
- 
 
     it('gets all dogs', () => {
         const createdDogs = getDogs0();
@@ -71,37 +69,45 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
-    it.skip('gets all dogs for a radius around a zip code', () => {
-        const createdDogs = getDogs0();
+    it('gets all dogs for a radius around a zip code', () => {
+        const createdDogsOwner0 = getDogs0();
+        const createdDogsOwner3 = getDogs3();
         return request(app)
-            .get('/api/dogs?zip=97229&radius=5')
+            .get('/api/dogs?zip=97220&radius=5')
             .then(res => {
-                expect(res.body).toContainEqual(createdDogs[3]);
-                expect(res.body).toContainEqual(createdDogs[4]);
+                expect(res.body.length).toEqual(5);
+                expect(res.body).toContainEqual(createdDogsOwner0[0]);
+                expect(res.body).toContainEqual(createdDogsOwner0[1]);
+                expect(res.body).toContainEqual(createdDogsOwner0[2]);
+                expect(res.body).toContainEqual(createdDogsOwner3[0]);
+                expect(res.body).toContainEqual(createdDogsOwner3[1]);
             });
     });
 
     it('gets all dogs in a zip code', () => {
         const createdDogs = getDogs0();
         return request(app)
-            .get('/api/dogs?zip=97220')
+            .get('/api/dogs?zip=97205')
             .then(res => {
+                expect(res.body.length).toEqual(3);
                 expect(res.body).toContainEqual(createdDogs[0]);
                 expect(res.body).toContainEqual(createdDogs[1]);
                 expect(res.body).toContainEqual(createdDogs[2]);
             });
     });
 
-    it.skip('gets all dogs in a city by zip code', () => {
-        const createdDogs = getDogs0();
+    it('gets all dogs in a city matching a given zip code', () => {
+        const createdDogsOwner0 = getDogs0();
+        const createdDogsOwner3 = getDogs3();
         return request(app)
             .get('/api/dogs?zip=97220&citySearch=true')
             .then(res => {
-                expect(res.body).toContainEqual(createdDogs[0]);
-                expect(res.body).toContainEqual(createdDogs[1]);
-                expect(res.body).toContainEqual(createdDogs[2]);
-                expect(res.body).not.toContainEqual(createdDogs[3]);
-                expect(res.body).not.toContainEqual(createdDogs[4]);
+                expect(res.body.length).toEqual(5);
+                expect(res.body).toContainEqual(createdDogsOwner0[0]);
+                expect(res.body).toContainEqual(createdDogsOwner0[1]);
+                expect(res.body).toContainEqual(createdDogsOwner0[2]);
+                expect(res.body).toContainEqual(createdDogsOwner3[0]);
+                expect(res.body).toContainEqual(createdDogsOwner3[1]);
             });
     });
 
@@ -116,7 +122,7 @@ describe('end to end tests of Dogs route', () => {
 
     });
 
-    it('deletes a dog by id', () => {
+    it.skip('deletes a dog by id', () => {
         const createdDogs = getDogs0();
         const token = getToken0();
         if(token) {
@@ -134,7 +140,7 @@ describe('end to end tests of Dogs route', () => {
         }
     });
 
-    it('updates a dog by id', () => {
+    it.skip('updates a dog by id', () => {
         const createdUsers = getUsers();
         const createdDogs = getDogs0();
         const token = getToken0();
