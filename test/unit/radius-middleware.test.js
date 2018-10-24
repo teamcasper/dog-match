@@ -17,25 +17,20 @@ describe('test the middleware that gets a radius of zip codes', () => {
     });
 
     it('returns a list of zip codes within a radius', done => {
-        const req = { query: { zip: '97229', radius: 5 } } ;
+        const req = { query: { zip: '97220', radius: 3 } } ;
         req.body = {};
 
         const next = () => {
             expect(req.body.zipCodes).toEqual([
-                '97078',
-                '97075',
-                '97076',
-                '97077',
-                '97005',
-                '97298',
-                '97003',
-                '97225',
-                '97006',
-                '97296',
-                '97291',
-                '97210',
-                '97229']);
-           
+                '97292',
+                '97216',
+                '97213',
+                '97299',
+                '97220',
+                '97230',
+                '97238',
+                '97218'
+            ]);
             done();
         };
 

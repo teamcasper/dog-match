@@ -3,7 +3,7 @@ const zipCityApi = require('../../lib/util/city-middleware');
 
 describe('Get zip code by location middleware test', () => {
 
-    it('Returns an error if no zipcode is supplied but citysearch is true', done => {
+    it('Returns an error if no zip code is supplied but citySearch is true', done => {
         const req = {
             query: { zip: '', citySearch: true }
         };
@@ -18,15 +18,15 @@ describe('Get zip code by location middleware test', () => {
         zipCityApi(req, null, next);
     });
 
-    it('Returns a city when provided with a zip code and citysearch is true', done => {
-        const req = { query: { zip: '97124', citySearch: true } };
+    it('Returns a city when provided with a zip code and citySearch is true', done => {
+        const req = { query: { zip: '97220', citySearch: true } };
         req.body = {};
 
         const next = () => {
-            expect(req.body.city).toEqual('Hillsboro');
-        
+            expect(req.body.city).toEqual('Portland');
             done();
         };
+        
         zipCityApi(req, null, next);
     });
 });
