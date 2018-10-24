@@ -2,7 +2,7 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3, getToken4 } = require('./helpers/seedData');
+const { getDogs0, getDogs3, getUsers, getBreeds, getToken0 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
     it.skip('posts a dog', () => {
