@@ -5,7 +5,7 @@ const app = require('../../lib/app');
 const { getDogs0, getDogs3, getUsers, getBreeds, getToken0 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
-    it.skip('posts a dog', () => {
+    it('posts a dog', () => {
         const token = getToken0();
         const createdUsers = getUsers();
         const createdBreeds = getBreeds(); 
@@ -57,7 +57,7 @@ describe('end to end tests of Dogs route', () => {
         }    
     });
 
-    it.skip('gets all dogs', () => {
+    it('gets all dogs', () => {
         const createdDogs = getDogs0();
 
         return request(app)
@@ -70,7 +70,7 @@ describe('end to end tests of Dogs route', () => {
     });
 
     
-    it.skip('gets all dogs in a zip code', () => {
+    it('gets all dogs in a zip code', () => {
         const createdDogs = getDogs0();
         return request(app)
             .get('/api/dogs?zip=97205')
@@ -93,7 +93,7 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
-    it.skip('gets all dogs in a city matching a given zip code', () => {
+    it('gets all dogs in a city matching a given zip code', () => {
         const createdDogsOwner0 = getDogs0();
         const createdDogsOwner3 = getDogs3();
         return request(app)
@@ -108,7 +108,7 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
-    it.skip('gets a dog by id', () => {
+    it('gets a dog by id', () => {
         const createdDogs = getDogs0();
 
         return request(app)
@@ -119,7 +119,7 @@ describe('end to end tests of Dogs route', () => {
 
     });
 
-    it.skip('deletes a dog by id', () => {
+    it('deletes a dog by id', () => {
         const createdDogs = getDogs0();
         const token = getToken0();
         if(token) {
@@ -137,7 +137,7 @@ describe('end to end tests of Dogs route', () => {
         }
     });
 
-    it.skip('updates a dog by id', () => {
+    it('updates a dog by id', () => {
         const createdUsers = getUsers();
         const createdDogs = getDogs0();
         const token = getToken0();
