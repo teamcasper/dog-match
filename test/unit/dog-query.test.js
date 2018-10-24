@@ -89,5 +89,26 @@ describe('dog query', () => {
         });
     });
 
+    describe('by weight', () => {
+        it('returns query for dogs in a weight range', () => {
+            const query = { minWeight: 2, maxWeight: 20 };
+            expect(dogQuery(query)).toEqual({
+                weight: { $gte: 2, $lte: 20 }
+            });
+        });
+        
+        it('returns query for dogs with a max weight only', () => {
+            const query = { maxWeight: 20 };
+            expect(dogQuery(query)).toEqual({
+                weight: { $lte: 20 }
+            });
+        });
 
+        it('returns query for dogs with a min weight only', () => {
+            const query = { minWeight: 2 };
+            expect(dogQuery(query)).toEqual({
+                weight: { $gte: 2 }
+            });
+        });
+    });
 });
