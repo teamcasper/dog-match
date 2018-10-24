@@ -11,16 +11,6 @@
     "start:watch": "nodemon index.js",
     "start": "node index.js"
   },
-  "jest": {
-    "reporters": [
-      [
-        "jest-nyan-reporter",
-        {
-          "suppressErrorReporter": false
-        }
-      ]
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/teamcasper/dog-match"
