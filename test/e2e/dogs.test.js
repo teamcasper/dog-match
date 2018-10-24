@@ -2,13 +2,14 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getDogs0, getUsers, getBreeds, getToken0 } = require('./helpers/seedData');
+const { getDogs0, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
-    it('posts a dog', () => {
+    it('posts a dog when you are signed in', () => {
         const token = getToken0();
         const createdUsers = getUsers();
         const createdBreeds = getBreeds(); 
+
         if(token) {
             return request(app)
                 .post('/api/dogs')
@@ -56,8 +57,33 @@ describe('end to end tests of Dogs route', () => {
                 });
         }    
     });
-        
- 
+
+    it('returns an error when you try to post a dog but are not signed in', () => {
+        const createdBreeds = getBreeds(); 
+        return request(app)
+            .post('/api/dogs')
+            .send({
+                name: 'Floof4',
+                description: 'Fluffy little friend',
+                weight: 6,
+                predictedWeight: 15,
+                price: 500,
+                photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+                age: {
+                    number: 6,
+                    unit: 'months'
+                },
+                spayedOrNeutered: true,
+                personalityAttributes: ['loving', 'playful'],
+                healthIssues: ['dental', 'vision'],
+                healthRating: 4,
+                healthDetails: 'Has a cavity, slight loss of vision in left eye',
+                breed: [createdBreeds[1]._id, createdBreeds[2]._id]
+            })
+            .then(res => {
+                expect(res.body).toEqual({ error: 'Missing token' });            
+            });
+    });
 
     it('gets all dogs', () => {
         const createdDogs = getDogs0();
@@ -119,6 +145,7 @@ describe('end to end tests of Dogs route', () => {
     it('deletes a dog by id', () => {
         const createdDogs = getDogs0();
         const token = getToken0();
+
         if(token) {
             return request(app)
                 .delete(`/api/dogs/${createdDogs[0]._id}`)
@@ -130,7 +157,21 @@ describe('end to end tests of Dogs route', () => {
                         expect(res.body).toContainEqual(createdDogs[2]);
                     })
                 );
-           
+        }
+    });
+
+    it('returns an error when you try to delete a dog by id and are not dogProvider', () => {
+        const createdDogs = getDogs0();
+        const token = getToken3();
+
+        if(token) {
+            return request(app)
+                .delete(`/api/dogs/${createdDogs[0]._id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .then(res => {
+                    expect(res.body).toEqual({ error: 'You are not authorized to make this change' });            
+                });
+                
         }
     });
 
@@ -182,6 +223,38 @@ describe('end to end tests of Dogs route', () => {
                         dogProvider: createdUsers[0]._id,
                         breed: null  
                     });            
+                });
+        }           
+    });
+
+    it('returns an error when a user who is not the dogProvider tries to update a dog by id', () => {
+        const createdUsers = getUsers();
+        const createdDogs = getDogs0();
+        const token = getToken3();
+
+        if(token) {
+            return request(app)
+                .put(`/api/dogs/${createdDogs[1]._id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    name: 'Floof4',
+                    description: 'Fluffy little friend',
+                    weight: 6,
+                    predictedWeight: 15,
+                    price: 500,
+                    photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+                    age: {
+                        number: 6,
+                        unit: 'months'
+                    },
+                    spayedOrNeutered: true,
+                    personalityAttributes: ['loving', 'playful'],
+                    healthIssues: ['dental'],
+                    healthRating: 4,
+                    healthDetails: 'Has a cavity',
+                })
+                .then(res => {
+                    expect(res.body).toEqual({ error: 'You are not authorized to make this change' });            
                 });
         }           
     });
