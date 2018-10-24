@@ -2,11 +2,11 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getMatches, getToken0 } = require('./helpers/seedData');
+const { getMatches, getToken0, getToken3 } = require('./helpers/seedData');
 
 describe('matches routes', () => {
 
-    it('posts a match', () => {
+    it('posts a match if you are a signed in user', () => {
         const token = getToken0();
 
         const data = {
@@ -26,6 +26,19 @@ describe('matches routes', () => {
             });
     });
 
+    it('will not allow you to post a match if you are not signed in', () => {
+        const data = {
+            feePaid: 125.25
+        };
+
+        return request(app)
+            .post('/api/matches')
+            .send(data)
+            .then(res => {
+                expect(res.body).toEqual({ error: 'Missing token' });            
+            });
+    });
+
     it('gets all matches', () => {
         const createdMatches = getMatches();
 
@@ -38,7 +51,7 @@ describe('matches routes', () => {
             });
     });
 
-    it('deletes a match by id', () => {
+    it('deletes a match by id if you are same user', () => {
         const token = getToken0();
         const createdMatches = getMatches();
 
@@ -56,16 +69,54 @@ describe('matches routes', () => {
 
     });
 
-    it('updates a match by id', () => {
+    it('will not delete a match by id if user is not seeker', () => {
+        const token = getToken3();
+        const createdMatches = getMatches();
+
+        if(token) {
+            return request(app)
+                .delete(`/api/matches/${createdMatches[1]._id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .then(res => {
+                    expect(res.body).toEqual({ error: 'You are not authorized to make this change' });            
+                });
+        }
+
+    });
+
+    it('updates a match by id if you are same user', () => {
+        const token = getToken0();
         const createdMatches = getMatches();
         let data = createdMatches[1];
         data.feePaid = 1000;
 
-        return request(app)
-            .put(`/api/matches/${createdMatches[1]._id}`)
-            .send(data)
-            .then(res => {
-                expect(res.body).toEqual(data);            
-            }); 
+        if(token) {
+            return request(app)
+                .put(`/api/matches/${createdMatches[1]._id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send(data)
+                .then(res => {
+                    expect(res.body).toEqual(data);            
+                });
+        }
+        
+    });
+
+    it('will not update a match by id if user is not seeker', () => {
+        const token = getToken3();
+        const createdMatches = getMatches();
+        let data = createdMatches[1];
+        data.feePaid = 1000;
+
+        if(token) {
+            return request(app)
+                .put(`/api/matches/${createdMatches[1]._id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send(data)
+                .then(res => {
+                    expect(res.body).toEqual({ error: 'You are not authorized to make this change' });            
+                });
+        }
+        
     });
 });
