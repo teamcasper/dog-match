@@ -6,9 +6,36 @@ describe('dog query', () => {
         expect(dogQuery(query)).toEqual({});
     });
 
-    it('creates a query by breed', () => {
-        const query = { breed: 'golden,husky,samoyed' };
-        expect(dogQuery(query)).toEqual({ breed: ['golden', 'husky', 'samoyed'] });
+    describe('by breed', () => {
+        it('returns a query for dogs with any of the selected breeds', () => {
+            const query = { 
+                searchType: 'or',
+                breed: 'golden,husky,samoyed'
+            };
+            expect(dogQuery(query)).toEqual({ 
+                breed: { $in: ['golden', 'husky', 'samoyed'] } 
+            });
+        });
+
+        it('returns a query for dogs with all of the selected breeds', () => {
+            const query = { 
+                searchType: 'and',
+                breed: 'golden,husky,samoyed' 
+            };
+            expect(dogQuery(query)).toEqual({ 
+                breed: { $all: ['golden', 'husky', 'samoyed'] } 
+            });
+        });
+
+        it('returns a query for dogs with none of the selected breeds', () => {
+            const query = { 
+                searchType: 'not',
+                breed: 'golden,husky,samoyed'
+            };
+            expect(dogQuery(query)).toEqual({ 
+                breed: { $nin: ['golden', 'husky', 'samoyed'] } 
+            });
+        });
     });
 
     describe('by age', () => {
@@ -155,6 +182,18 @@ describe('dog query', () => {
             expect(dogQuery(query)).toEqual({
                 price: { $gte: 100 }
             });
+        });
+    });
+
+    describe('by spayed/neutered', () => {
+        it('returns true when request is true', () => {
+            const query = { spayedOrNeutered: true };
+            expect(dogQuery(query)).toEqual(query);
+        });
+
+        it('returns false when request is false', () => {
+            const query = { spayedOrNeutered: false };
+            expect(dogQuery(query)).toEqual(query);
         });
     });
 });
