@@ -272,6 +272,26 @@ let dogs4 = [
     }
 ];
 
+let dogs4 = [
+    {
+        name: 'Dog owned by user 4 in OKC',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+    }
+];
+
 const createUser = user => {
     return request(app)
         .post('/api/users')
