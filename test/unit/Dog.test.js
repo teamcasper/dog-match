@@ -11,16 +11,14 @@ describe('Dog Model', () => {
             predictedWeight: 15,
             price: 500,
             photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-            age: {
-                number: 6,
-                unit: 'months'
-            },
+            ageInMonths: 6,
             spayedOrNeutered: true,
             personalityAttributes: ['loving', 'playful'],
             healthIssues: ['dental', 'vision'],
             healthRating: 4,
             healthDetails: 'Has a cavity, slight loss of vision in left eye',
-            dogProvider: Types.ObjectId()
+            dogProvider: Types.ObjectId(),
+            gender: 'female'
         };
 
         const dog = new Dog(data);
@@ -33,7 +31,7 @@ describe('Dog Model', () => {
             name: 'Floof'
         });
 
-        const errors = getErrors(dog.validateSync(), 6);
+        const errors = getErrors(dog.validateSync(), 7);
         expect(errors.description.properties.message).toEqual('Description is required.');
         expect(errors.weight.properties.message).toEqual('Weight in lbs is required.');
     });
