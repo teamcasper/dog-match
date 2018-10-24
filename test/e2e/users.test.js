@@ -1,7 +1,16 @@
+/* eslint-disable-next-line */
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
+const User = require('../../lib/models/User');
 const { getUsers } = require('./helpers/seedData');
+const bcrypt = require('bcrypt');
+
+const checkStatus = statusCode => res => {
+    expect(res.status).toEqual(statusCode);
+};
+
+const checkOk = res => checkStatus(200)(res);
 
 describe('end to end tests of Users route', () => {
 
@@ -39,7 +48,8 @@ describe('end to end tests of Users route', () => {
                         city: 'Portland',
                         state: 'OR',
                         zip: 97205
-                    }
+                    },
+                    passwordHash: expect.any(String)
                 });
             });
     });
@@ -78,8 +88,102 @@ describe('end to end tests of Users route', () => {
                         city: 'Portland',
                         state: 'OR',
                         zip: 97205
-                    }
+                    },
+                    passwordHash: expect.any(String)
                 });
+            });
+    });
+
+    it('hashes a user\'s password', () => {
+        return User.create({
+            fullName: 'Douglas Fir',
+            preferredName: 'Doug',
+            email: 'dfir2@gmail.com',
+            role: 'user',
+            preferredContact: {
+                text: 5035554444,
+                comments: 'Nights and weekends are best'
+            },
+            address: {
+                city: 'Portland',
+                state: 'OR',
+                zip: 97205
+            },
+            password: 'dfir123'
+        }).then(user => {
+            expect(user.password).not.toEqual('dfir123');
+            expect(bcrypt.compareSync('dfir123', user.passwordHash));
+        });
+    });
+
+    it('compares passwords', () => {
+        const user = {
+            fullName: 'Douglas Fir',
+            preferredName: 'Doug',
+            email: 'dfir2@gmail.com',
+            role: 'user',
+            preferredContact: {
+                text: 5035554444,
+                comments: 'Nights and weekends are best'
+            },
+            address: {
+                city: 'Portland',
+                state: 'OR',
+                zip: 97205
+            },
+            password: 'dfir123'
+        };
+        
+        User.create(user)
+            .then(createdUser => {
+                expect(createdUser.compare(user.password)).toBeTruthy();
+                expect(createdUser.compare('543lkj')).toBeFalsy();
+            });
+    });
+
+    it('signs in a user', () => {
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' })
+            .then(res => {
+                checkOk(res);
+                expect(res.body.token).toEqual(expect.any(String));
+            });
+    });
+
+    it('rejects a sign in with a bad password', () => {
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'badpassword' })
+            .then(checkStatus(401));
+    });
+
+    it('rejects a sign in with a token but bad password', () => {
+        let token;
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'wtree@gmail.com', password: 'wtree123' })
+            .then(res => {
+                token = res;
+            })
+            .then(request(app)
+                .post('/api/users/signin')
+                .set('Authorization', `Bearer ${token}`)
+                .send({ email: 'dfir@gmail.com', password: 'dfir12345' })
+                .then(checkStatus(401)));
+    });
+
+    it('verifies a signed in user', () => {
+        return request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' })
+            .then(res => {
+                return request(app)
+                    .get('/api/users/verify')
+                    .set('Authorization', `Bearer ${res.body.token}`)
+                    .then(res => {
+                        expect(res.body).toEqual({ success: true });
+                    });
             });
     });
 
@@ -153,13 +257,9 @@ describe('end to end tests of Users route', () => {
                         state: 'OR',
                         zip: 97220
                     },
-                    businessInfo: null
+                    businessInfo: null,
+                    passwordHash: expect.any(String)
                 });            
             });
-            
     });
-
-
-   
 });
-

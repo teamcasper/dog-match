@@ -24,6 +24,7 @@ beforeEach(() => {
     return dropCollection('breeds');
 });
 
+let token = null;
 let createdUsers;
 let createdMatches;
 let createdBreeds;
@@ -175,7 +176,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof2',
@@ -193,7 +193,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof3',
@@ -211,7 +210,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof4 dogs[3]',
@@ -273,8 +271,10 @@ const createBreed = breed => {
 };
 
 const createDog = dog => {
+    token = getToken();
     return request(app)
         .post('/api/dogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(dog)
         .then(res => res.body);
 };
@@ -284,6 +284,16 @@ beforeEach(() => {
         createdUsers = usersRes;
     });
 });
+
+beforeEach(() => {
+    return Promise.resolve(
+        request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' }))
+        .then(res => {
+            token = res.body.token;
+        });
+});
   
 beforeEach(() => {
     return Promise.all(breeds.map(createBreed)).then(breedRes => {
@@ -292,18 +302,18 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
+    dogs[0].breed = [createdBreeds[0]._id];
+    dogs[1].breed = [createdBreeds[1]._id];
+    dogs[2].breed = [createdBreeds[2]._id];
+    dogs[3].breed = [createdBreeds[0]._id];
+    dogs[4].breed = [createdBreeds[1]._id];
+
     return Promise.all(dogs.map(createDog)).then(dogsRes => {
         createdDogs = dogsRes;
-        dogs[0].dogProvider = createdUsers[1]._id;
-        dogs[1].dogProvider = createdUsers[2]._id;
-        dogs[2].dogProvider = createdUsers[2]._id;
-        dogs[3].dogProvider = createdUsers[3]._id;
-        dogs[4].dogProvider = createdUsers[3]._id;
-        dogs[0].breed = [createdBreeds[0]._id];
-        dogs[1].breed = [createdBreeds[1]._id];
-        dogs[2].breed = [createdBreeds[2]._id];
-        dogs[3].breed = [createdBreeds[0]._id];
-        dogs[4].breed = [createdBreeds[1]._id];
+
+//         dogs[3].dogProvider = createdUsers[3]._id;
+//         dogs[4].dogProvider = createdUsers[3]._id;
+
     });
 });
 
@@ -329,10 +339,12 @@ const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
 const getDogs = () => createdDogs;
 const getMatches = () => createdMatches;
+const getToken = () => token;
 
 module.exports = {
     getUsers,
     getBreeds,
     getDogs,
-    getMatches
+    getMatches,
+    getToken
 };
