@@ -25,11 +25,13 @@ beforeEach(() => {
 
 let token0 = null;
 let token3 = null;
+let token4  = null;
 let createdUsers;
 let createdMatches;
 let createdBreeds;
 let createdDogs0;
 let createdDogs3;
+let createdDogs4;
 
 let users = [
     {
@@ -84,7 +86,7 @@ let users = [
         password: 'soak123'
     },
     {
-        fullName: 'User[3] near 97229',
+        fullName: 'User[3] near User[1]',
         preferredName: 'Artie',
         email: 'artie@gmail.com',
         role: 'user',
@@ -92,16 +94,36 @@ let users = [
             text: 5035551111
         },
         address: {
-            city: 'Hillsboro',
+            city: 'Portland',
             state: 'OR',
-            zip: 97124
+            zip: 97216
         },
         businessInfo: { 
-            name: 'Beaverton Dogs',
-            website: 'www.beavertondogs.com',
+            name: 'Portland Dogs',
+            website: 'www.PortlandDogs.com',
             type: 'breeder'
         },
         password: 'mope123'
+    },
+    {
+        fullName: 'User[4] far away!',
+        preferredName: 'Okie',
+        email: 'okie@gmail.com',
+        role: 'user',
+        preferredContact: {
+            text: 5035551111
+        },
+        address: {
+            city: 'Oklahoma City',
+            state: 'OK',
+            zip: 73132
+        },
+        businessInfo: { 
+            name: 'OKC Dogs',
+            website: 'www.OKCDogs.com',
+            type: 'breeder'
+        },
+        password: 'okie123'
     }
 ];
 
@@ -242,6 +264,26 @@ let dogs3 = [
     }
 ];
 
+let dogs4 = [
+    {
+        name: 'Dog owned by user 4 in OKC',
+        description: 'Fluffy little friend',
+        weight: 6,
+        predictedWeight: 15,
+        price: 500,
+        photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
+        age: {
+            number: 6,
+            unit: 'months'
+        },
+        spayedOrNeutered: true,
+        personalityAttributes: ['loving', 'playful'],
+        healthIssues: ['dental', 'vision'],
+        healthRating: 4,
+        healthDetails: 'Has a cavity, slight loss of vision in left eye',
+    }
+];
+
 const createUser = user => {
     return request(app)
         .post('/api/users')
@@ -283,6 +325,15 @@ const createDog3 = dog => {
         .then(res => res.body);
 };
 
+const createDog4 = dog => {
+    let token = getToken4();
+    return request(app)
+        .post('/api/dogs')
+        .set('Authorization', `Bearer ${token}`)
+        .send(dog)
+        .then(res => res.body);
+};
+
 beforeEach(() => {
     return Promise.all(users.map(createUser)).then(usersRes => {
         createdUsers = usersRes;
@@ -306,6 +357,16 @@ beforeEach(() => {
             .send({ email: 'artie@gmail.com', password: 'mope123' }))
         .then(res => {
             token3 = res.body.token;
+        });
+});
+
+beforeEach(() => {
+    return Promise.resolve(
+        request(app)
+            .post('/api/users/signin')
+            .send({ email: 'okie@gmail.com', password: 'okie123' }))
+        .then(res => {
+            token4 = res.body.token;
         });
 });
   
@@ -336,6 +397,15 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
+
+    dogs4[0].breed = [createdBreeds[0]._id];
+
+    return Promise.all(dogs4.map(createDog4)).then(dogsRes => {
+        createdDogs4 = dogsRes;
+    });
+});
+
+beforeEach(() => {
     return Promise.all(matches.map(createMatch)).then(matchesRes => {
         createdMatches = matchesRes;
 
@@ -357,16 +427,20 @@ const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
 const getDogs0 = () => createdDogs0;
 const getDogs3 = () => createdDogs3;
+const getDogs4 = () => createdDogs4;
 const getMatches = () => createdMatches;
 const getToken0 = () => token0;
 const getToken3 = () => token3;
+const getToken4 = () => token4;
 
 module.exports = {
     getUsers,
     getBreeds,
     getDogs0,
     getDogs3,
+    getDogs4,
     getMatches,
     getToken0,
-    getToken3
+    getToken3,
+    getToken4
 };
