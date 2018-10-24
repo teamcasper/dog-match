@@ -228,7 +228,6 @@ describe('end to end tests of Dogs route', () => {
     });
 
     it('returns an error when a user who is not the dogProvider tries to update a dog by id', () => {
-        const createdUsers = getUsers();
         const createdDogs = getDogs0();
         const token = getToken3();
 
