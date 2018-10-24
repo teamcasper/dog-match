@@ -119,7 +119,7 @@ let breeds = [
         shed: true
     },
     {
-        name: 'German sheppard',
+        name: 'German shepherd',
         weightRange: '61 to 70 lbs',
         lifespan: 14,
         temperament: ['herder', 'protective'],
@@ -131,7 +131,7 @@ let breeds = [
         name: 'Yorky',
         weightRange: '1 to 10 lbs',
         lifespan: 13,
-        temperament: ['head strong', 'independent'],
+        temperament: ['headstrong', 'independent'],
         coatTypes: 'Silky',
         hypoallergenic: true,
         shed: false
@@ -241,6 +241,9 @@ beforeEach(() => {
         dogs[0].dogProvider = createdUsers[1]._id;
         dogs[1].dogProvider = createdUsers[2]._id;
         dogs[2].dogProvider = createdUsers[2]._id;
+        dogs[0].breed = [createdBreeds[0]._id];
+        dogs[1].breed = [createdBreeds[1]._id];
+        dogs[2].breed = [createdBreeds[2]._id];
     });
 });
 
