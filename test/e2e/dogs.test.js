@@ -2,11 +2,11 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getDogs, getUsers, getBreeds, getToken } = require('./helpers/seedData');
+const { getDogs0, getUsers, getBreeds, getToken0 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
     it('posts a dog', () => {
-        const token = getToken();
+        const token = getToken0();
         const createdUsers = getUsers();
         const createdBreeds = getBreeds(); 
         if(token) {
@@ -60,7 +60,7 @@ describe('end to end tests of Dogs route', () => {
  
 
     it('gets all dogs', () => {
-        const createdDogs = getDogs();
+        const createdDogs = getDogs0();
 
         return request(app)
             .get('/api/dogs')
@@ -72,7 +72,7 @@ describe('end to end tests of Dogs route', () => {
     });
 
     it.skip('gets all dogs for a radius around a zip code', () => {
-        const createdDogs = getDogs();
+        const createdDogs = getDogs0();
         return request(app)
             .get('/api/dogs?zip=97229&radius=5')
             .then(res => {
@@ -82,7 +82,7 @@ describe('end to end tests of Dogs route', () => {
     });
 
     it('gets all dogs in a zip code', () => {
-        const createdDogs = getDogs();
+        const createdDogs = getDogs0();
         return request(app)
             .get('/api/dogs?zip=97220')
             .then(res => {
@@ -93,7 +93,7 @@ describe('end to end tests of Dogs route', () => {
     });
 
     it.skip('gets all dogs in a city by zip code', () => {
-        const createdDogs = getDogs();
+        const createdDogs = getDogs0();
         return request(app)
             .get('/api/dogs?zip=97220&citySearch=true')
             .then(res => {
@@ -106,7 +106,7 @@ describe('end to end tests of Dogs route', () => {
     });
 
     it('gets a dog by id', () => {
-        const createdDogs = getDogs();
+        const createdDogs = getDogs0();
 
         return request(app)
             .get(`/api/dogs/${createdDogs[1]._id}`)
@@ -117,8 +117,8 @@ describe('end to end tests of Dogs route', () => {
     });
 
     it('deletes a dog by id', () => {
-        const createdDogs = getDogs();
-        const token = getToken();
+        const createdDogs = getDogs0();
+        const token = getToken0();
         if(token) {
             return request(app)
                 .delete(`/api/dogs/${createdDogs[0]._id}`)
@@ -136,8 +136,8 @@ describe('end to end tests of Dogs route', () => {
 
     it('updates a dog by id', () => {
         const createdUsers = getUsers();
-        const createdDogs = getDogs();
-        const token = getToken();
+        const createdDogs = getDogs0();
+        const token = getToken0();
 
         if(token) {
             return request(app)

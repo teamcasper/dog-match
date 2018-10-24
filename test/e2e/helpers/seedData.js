@@ -3,7 +3,6 @@ require('../../../lib/util/connect')();
 const { dropCollection } = require('./db');
 const request = require('supertest');
 const app = require('../../../lib/app');
-const { Types } = require('mongoose');
 
 beforeEach(() => {
     return dropCollection('users');
@@ -24,11 +23,13 @@ beforeEach(() => {
     return dropCollection('breeds');
 });
 
-let token = null;
+let token0 = null;
+let token3 = null;
 let createdUsers;
 let createdMatches;
 let createdBreeds;
-let createdDogs;
+let createdDogs0;
+let createdDogs3;
 
 let users = [
     {
@@ -106,25 +107,16 @@ let users = [
 
 let matches = [
     {
-        seeker:  Types.ObjectId(),
-        provider: Types.ObjectId(),
-        dog: Types.ObjectId(),
         datePosted: Date('May 1, 2018'),
         dateFulfilled: Date('June 1, 2018'),
         feePaid: 100.00
     },
     {
-        seeker:  Types.ObjectId(),
-        provider: Types.ObjectId(),
-        dog: Types.ObjectId(),
         datePosted: Date('Jan 15, 2017'),
         dateFulfilled: Date('March 1, 2017'),
         feePaid: 100.00
     },
     {
-        seeker:  Types.ObjectId(),
-        provider: Types.ObjectId(),
-        dog: Types.ObjectId(),
         datePosted: Date('April 4, 2017'),
     }
 ];
@@ -159,7 +151,7 @@ let breeds = [
     }
 ];
 
-let dogs = [
+let dogs0 = [
     {
         name: 'Floof1',
         description: 'Fluffy little friend',
@@ -210,7 +202,10 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-    },
+    }
+];
+
+let dogs3 = [
     {
         name: 'Floof4 dogs[3]',
         description: 'Fluffy little friend',
@@ -227,7 +222,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof5 dogs[4]',
@@ -245,8 +239,7 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
-    },
+    }
 ];
 
 const createUser = user => {
@@ -257,8 +250,10 @@ const createUser = user => {
 };
 
 const createMatch = match => {
+    let token = getToken0();
     return request(app)
         .post('/api/matches')
+        .set('Authorization', `Bearer ${token}`)
         .send(match)
         .then(res => res.body);
 };
@@ -270,8 +265,17 @@ const createBreed = breed => {
         .then(res => res.body);
 };
 
-const createDog = dog => {
-    token = getToken();
+const createDog0 = dog => {
+    let token = getToken0();
+    return request(app)
+        .post('/api/dogs')
+        .set('Authorization', `Bearer ${token}`)
+        .send(dog)
+        .then(res => res.body);
+};
+
+const createDog3 = dog => {
+    let token = getToken0();
     return request(app)
         .post('/api/dogs')
         .set('Authorization', `Bearer ${token}`)
@@ -291,7 +295,17 @@ beforeEach(() => {
             .post('/api/users/signin')
             .send({ email: 'dfir@gmail.com', password: 'dfir123' }))
         .then(res => {
-            token = res.body.token;
+            token0 = res.body.token;
+        });
+});
+
+beforeEach(() => {
+    return Promise.resolve(
+        request(app)
+            .post('/api/users/signin')
+            .send({ email: 'artie@gmail.com', password: 'mope123' }))
+        .then(res => {
+            token3 = res.body.token;
         });
 });
   
@@ -302,18 +316,22 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
-    dogs[0].breed = [createdBreeds[0]._id];
-    dogs[1].breed = [createdBreeds[1]._id];
-    dogs[2].breed = [createdBreeds[2]._id];
-    dogs[3].breed = [createdBreeds[0]._id];
-    dogs[4].breed = [createdBreeds[1]._id];
+    dogs0[0].breed = [createdBreeds[0]._id];
+    dogs0[1].breed = [createdBreeds[1]._id];
+    dogs0[2].breed = [createdBreeds[2]._id];
+   
+    return Promise.all(dogs0.map(createDog0)).then(dogsRes => {
+        createdDogs0 = dogsRes;
+    });
+});
 
-    return Promise.all(dogs.map(createDog)).then(dogsRes => {
-        createdDogs = dogsRes;
+beforeEach(() => {
 
-//         dogs[3].dogProvider = createdUsers[3]._id;
-//         dogs[4].dogProvider = createdUsers[3]._id;
+    dogs3[0].breed = [createdBreeds[0]._id];
+    dogs3[1].breed = [createdBreeds[1]._id];
 
+    return Promise.all(dogs3.map(createDog3)).then(dogsRes => {
+        createdDogs3 = dogsRes;
     });
 });
 
@@ -323,28 +341,32 @@ beforeEach(() => {
 
         matches[0].seeker = createdUsers[0]._id;
         matches[0].provider = createdUsers[1]._id;
-        matches[0].dog = createdDogs[0]._id;
+        matches[0].dog = createdDogs0[0]._id;
 
         matches[1].seeker = createdUsers[0]._id;
         matches[1].provider = createdUsers[2]._id;
-        matches[1].dog = createdDogs[1]._id;
+        matches[1].dog = createdDogs0[1]._id;
 
         matches[2].seeker = createdUsers[1]._id;
         matches[2].provider = createdUsers[2]._id;
-        matches[2].dog = createdDogs[2]._id;
+        matches[2].dog = createdDogs0[2]._id;
     });
 });
 
 const getUsers = () => createdUsers;
 const getBreeds = () => createdBreeds;
-const getDogs = () => createdDogs;
+const getDogs0 = () => createdDogs0;
+const getDogs3 = () => createdDogs3;
 const getMatches = () => createdMatches;
-const getToken = () => token;
+const getToken0 = () => token0;
+const getToken3 = () => token3;
 
 module.exports = {
     getUsers,
     getBreeds,
-    getDogs,
+    getDogs0,
+    getDogs3,
     getMatches,
-    getToken
+    getToken0,
+    getToken3
 };
