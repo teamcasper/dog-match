@@ -67,7 +67,7 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
-    it('gets all dogs for a radius around a zip code', () => {
+    it.skip('gets all dogs for a radius around a zip code', () => {
         const createdDogs = getDogs();
         return request(app)
             .get('/api/dogs?zip=97229&radius=5')
@@ -85,6 +85,19 @@ describe('end to end tests of Dogs route', () => {
                 expect(res.body).toContainEqual(createdDogs[0]);
                 expect(res.body).toContainEqual(createdDogs[1]);
                 expect(res.body).toContainEqual(createdDogs[2]);
+            });
+    });
+
+    it.skip('gets all dogs in a city by zip code', () => {
+        const createdDogs = getDogs();
+        return request(app)
+            .get('/api/dogs?zip=97220&citySearch=true')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs[0]);
+                expect(res.body).toContainEqual(createdDogs[1]);
+                expect(res.body).toContainEqual(createdDogs[2]);
+                expect(res.body).not.toContainEqual(createdDogs[3]);
+                expect(res.body).not.toContainEqual(createdDogs[4]);
             });
     });
 

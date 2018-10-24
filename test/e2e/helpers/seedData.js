@@ -90,9 +90,9 @@ let users = [
             text: 5035551111
         },
         address: {
-            city: 'Portland',
+            city: 'Hillsboro',
             state: 'OR',
-            zip: 97075
+            zip: 97124
         },
         businessInfo: { 
             name: 'Beaverton Dogs',
