@@ -3,7 +3,6 @@ require('../../../lib/util/connect')();
 const { dropCollection } = require('./db');
 const request = require('supertest');
 const app = require('../../../lib/app');
-const { Types } = require('mongoose');
 
 beforeEach(() => {
     return dropCollection('users');
@@ -152,7 +151,7 @@ let breeds = [
     }
 ];
 
-let dogs = [
+let dogs0 = [
     {
         name: 'Floof1',
         description: 'Fluffy little friend',
@@ -203,7 +202,10 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-    },
+    }
+];
+
+let dogs3 = [
     {
         name: 'Floof4 dogs[3]',
         description: 'Fluffy little friend',
@@ -237,7 +239,7 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-    },
+    }
 ];
 
 const createUser = user => {
@@ -314,30 +316,22 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
-    dogs[0].breed = [createdBreeds[0]._id];
-    dogs[1].breed = [createdBreeds[1]._id];
-    dogs[2].breed = [createdBreeds[2]._id];
+    dogs0[0].breed = [createdBreeds[0]._id];
+    dogs0[1].breed = [createdBreeds[1]._id];
+    dogs0[2].breed = [createdBreeds[2]._id];
    
-    return Promise.all(dogs.map(createDog0)).then(dogsRes => {
+    return Promise.all(dogs0.map(createDog0)).then(dogsRes => {
         createdDogs0 = dogsRes;
-
-        //         dogs[3].dogProvider = createdUsers[3]._id;
-        //         dogs[4].dogProvider = createdUsers[3]._id;
-
     });
 });
 
 beforeEach(() => {
 
-    dogs[3].breed = [createdBreeds[0]._id];
-    dogs[4].breed = [createdBreeds[1]._id];
+    dogs3[0].breed = [createdBreeds[0]._id];
+    dogs3[1].breed = [createdBreeds[1]._id];
 
-    return Promise.all(dogs.map(createDog3)).then(dogsRes => {
+    return Promise.all(dogs3.map(createDog3)).then(dogsRes => {
         createdDogs3 = dogsRes;
-
-        //         dogs[3].dogProvider = createdUsers[3]._id;
-        //         dogs[4].dogProvider = createdUsers[3]._id;
-
     });
 });
 
