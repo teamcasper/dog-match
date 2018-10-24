@@ -134,4 +134,27 @@ describe('dog query', () => {
             });
         });
     });
+
+    describe('by price', () => {
+        it('returns query for dogs in a price range', () => {
+            const query = { minPrice: 100, maxPrice: 500 };
+            expect(dogQuery(query)).toEqual({
+                price: { $gte: 100, $lte: 500 }
+            });
+        });
+        
+        it('returns query for dogs with a max price only', () => {
+            const query = { maxPrice: 500 };
+            expect(dogQuery(query)).toEqual({
+                price: { $lte: 500 }
+            });
+        });
+
+        it('returns query for dogs with a min price only', () => {
+            const query = { minPrice: 100 };
+            expect(dogQuery(query)).toEqual({
+                price: { $gte: 100 }
+            });
+        });
+    });
 });
