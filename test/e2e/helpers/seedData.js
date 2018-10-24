@@ -24,8 +24,6 @@ beforeEach(() => {
     return dropCollection('breeds');
 });
 
-let token = null;
-
 let token0 = null;
 let token3 = null;
 let createdUsers;
@@ -110,25 +108,16 @@ let users = [
 
 let matches = [
     {
-        seeker:  Types.ObjectId(),
-        provider: Types.ObjectId(),
-        dog: Types.ObjectId(),
         datePosted: Date('May 1, 2018'),
         dateFulfilled: Date('June 1, 2018'),
         feePaid: 100.00
     },
     {
-        seeker:  Types.ObjectId(),
-        provider: Types.ObjectId(),
-        dog: Types.ObjectId(),
         datePosted: Date('Jan 15, 2017'),
         dateFulfilled: Date('March 1, 2017'),
         feePaid: 100.00
     },
     {
-        seeker:  Types.ObjectId(),
-        provider: Types.ObjectId(),
-        dog: Types.ObjectId(),
         datePosted: Date('April 4, 2017'),
     }
 ];
@@ -259,8 +248,10 @@ const createUser = user => {
 };
 
 const createMatch = match => {
+    let token = getToken0();
     return request(app)
         .post('/api/matches')
+        .set('Authorization', `Bearer ${token}`)
         .send(match)
         .then(res => res.body);
 };
@@ -273,7 +264,7 @@ const createBreed = breed => {
 };
 
 const createDog0 = dog => {
-    token = getToken0();
+    let token = getToken0();
     return request(app)
         .post('/api/dogs')
         .set('Authorization', `Bearer ${token}`)
@@ -282,7 +273,7 @@ const createDog0 = dog => {
 };
 
 const createDog3 = dog => {
-    token = getToken0();
+    let token = getToken0();
     return request(app)
         .post('/api/dogs')
         .set('Authorization', `Bearer ${token}`)
