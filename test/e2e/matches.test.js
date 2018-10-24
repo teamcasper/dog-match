@@ -51,6 +51,17 @@ describe('matches routes', () => {
             });
     });
 
+    // it('gets a match by id', () => {
+    //     const createdMatches = getMatches();
+
+    //     return request(app)
+    //         .get(`/api/dogs/${createdMatches[1]._id}`)
+    //         .then(res => {
+    //             expect(res.body).toEqual(createdMatches[1]);
+    //         });
+
+    // });
+
     it('deletes a match by id if you are same user', () => {
         const token = getToken0();
         const createdMatches = getMatches();
