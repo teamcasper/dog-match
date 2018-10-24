@@ -29,7 +29,6 @@ describe('end to end tests of Dogs route', () => {
                     healthIssues: ['dental', 'vision'],
                     healthRating: 4,
                     healthDetails: 'Has a cavity, slight loss of vision in left eye',
-                    dogProvider: createdUsers[2]._id,
                     breed: [createdBreeds[1]._id, createdBreeds[2]._id]
                 })
                 .then(res => {
@@ -52,7 +51,7 @@ describe('end to end tests of Dogs route', () => {
                         healthIssues: ['dental', 'vision'],
                         healthRating: 4,
                         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-                        dogProvider: createdUsers[2]._id
+                        dogProvider: createdUsers[0]._id
                     });
                 });
         }    
@@ -88,14 +87,16 @@ describe('end to end tests of Dogs route', () => {
         const token = getToken();
         if(token) {
             return request(app)
-                .delete(`/api/dogs/${createdDogs[1]._id}`)
+                .delete(`/api/dogs/${createdDogs[0]._id}`)
                 .set('Authorization', `Bearer ${token}`)
-                .then(() => request(app).get('/api/dogs'))
-                .then(res => {
-                    expect(res.body).not.toContainEqual(createdDogs[1]);
-                    expect(res.body).toContainEqual(createdDogs[0]);
-                    expect(res.body).toContainEqual(createdDogs[2]);
-                });
+                .then(() => request(app).get('/api/dogs')
+                    .then(res => {
+                        expect(res.body).not.toContainEqual(createdDogs[0]);
+                        expect(res.body).toContainEqual(createdDogs[1]);
+                        expect(res.body).toContainEqual(createdDogs[2]);
+                    })
+                );
+           
         }
     });
 
@@ -124,7 +125,6 @@ describe('end to end tests of Dogs route', () => {
                     healthIssues: ['dental'],
                     healthRating: 4,
                     healthDetails: 'Has a cavity',
-                    dogProvider: createdUsers[2]._id         
                 })
                 .then(res => {
                     expect(res.body).toEqual({
@@ -145,7 +145,7 @@ describe('end to end tests of Dogs route', () => {
                         healthIssues: ['dental'],
                         healthRating: 4,
                         healthDetails: 'Has a cavity',
-                        dogProvider: createdUsers[2]._id,
+                        dogProvider: createdUsers[0]._id,
                         breed: null  
                     });            
                 });

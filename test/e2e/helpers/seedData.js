@@ -156,7 +156,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof2',
@@ -174,7 +173,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
     {
         name: 'Floof3',
@@ -192,7 +190,6 @@ let dogs = [
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        dogProvider: Types.ObjectId()
     },
 ];
 
@@ -231,6 +228,16 @@ beforeEach(() => {
         createdUsers = usersRes;
     });
 });
+
+beforeEach(() => {
+    return Promise.resolve(
+        request(app)
+            .post('/api/users/signin')
+            .send({ email: 'dfir@gmail.com', password: 'dfir123' }))
+        .then(res => {
+            token = res.body.token;
+        });
+});
   
 beforeEach(() => {
     return Promise.all(breeds.map(createBreed)).then(breedRes => {
@@ -239,14 +246,12 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
+    dogs[0].breed = [createdBreeds[0]._id];
+    dogs[1].breed = [createdBreeds[1]._id];
+    dogs[2].breed = [createdBreeds[2]._id];
+
     return Promise.all(dogs.map(createDog)).then(dogsRes => {
         createdDogs = dogsRes;
-        dogs[0].dogProvider = createdUsers[1]._id;
-        dogs[1].dogProvider = createdUsers[2]._id;
-        dogs[2].dogProvider = createdUsers[2]._id;
-        dogs[0].breed = [createdBreeds[0]._id];
-        dogs[1].breed = [createdBreeds[1]._id];
-        dogs[2].breed = [createdBreeds[2]._id];
     });
 });
 
@@ -266,16 +271,6 @@ beforeEach(() => {
         matches[2].provider = createdUsers[2]._id;
         matches[2].dog = createdDogs[2]._id;
     });
-});
-
-beforeEach(() => {
-    return Promise.resolve(
-        request(app)
-            .post('/api/users/signin')
-            .send({ email: 'dfir@gmail.com', password: 'dfir123' }))
-        .then(res => {
-            token = res.body.token;
-        });
 });
 
 const getUsers = () => createdUsers;
