@@ -394,20 +394,22 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
+    
+    matches[0].seeker = createdUsers[0]._id;
+    matches[0].provider = createdUsers[1]._id;
+    matches[0].dog = createdDogs0[0]._id;
+
+    matches[1].seeker = createdUsers[0]._id;
+    matches[1].provider = createdUsers[2]._id;
+    matches[1].dog = createdDogs0[1]._id;
+
+    matches[2].seeker = createdUsers[1]._id;
+    matches[2].provider = createdUsers[2]._id;
+    matches[2].dog = createdDogs0[2]._id;
+
     return Promise.all(matches.map(createMatch)).then(matchesRes => {
         createdMatches = matchesRes;
 
-        matches[0].seeker = createdUsers[0]._id;
-        matches[0].provider = createdUsers[1]._id;
-        matches[0].dog = createdDogs0[0]._id;
-
-        matches[1].seeker = createdUsers[0]._id;
-        matches[1].provider = createdUsers[2]._id;
-        matches[1].dog = createdDogs0[1]._id;
-
-        matches[2].seeker = createdUsers[1]._id;
-        matches[2].provider = createdUsers[2]._id;
-        matches[2].dog = createdDogs0[2]._id;
     });
 });
 
