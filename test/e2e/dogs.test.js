@@ -288,4 +288,39 @@ describe('end to end tests of Dogs route', () => {
             });
     });
 
+    it('gets dogs with in city based on zip and multiple types of queries', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?zip=97220&citySearch=true&personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=4')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).not.toContainEqual(createdDogs3[1]);
+                expect(res.body).not.toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
+    });
+    
+    it('gets dogs within radius of zip and multiple types of queries', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?zip=97220&radius=3&personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=2')
+            .then(res => {
+                expect(res.body).not.toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).toContainEqual(createdDogs3[1]);
+                expect(res.body).not.toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
+    });
 });
