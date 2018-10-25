@@ -129,17 +129,17 @@ let users = [
 
 let matches = [
     {
-        datePosted: Date('May 1, 2018'),
-        dateFulfilled: Date('June 1, 2018'),
+        datePosted: new Date('May 1, 2018'),
+        dateFulfilled: new Date('June 1, 2018'),
         feePaid: 100.00
     },
     {
-        datePosted: Date('Jan 15, 2017'),
-        dateFulfilled: Date('March 1, 2017'),
+        datePosted: new Date('Jan 15, 2017'),
+        dateFulfilled: new Date('March 1, 2017'),
         feePaid: 100.00
     },
     {
-        datePosted: Date('April 4, 2017'),
+        datePosted: new Date('April 4, 2017'),
     }
 ];
 
@@ -394,7 +394,7 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
-    
+
     matches[0].seeker = createdUsers[0]._id;
     matches[0].provider = createdUsers[1]._id;
     matches[0].dog = createdDogs0[0]._id;
