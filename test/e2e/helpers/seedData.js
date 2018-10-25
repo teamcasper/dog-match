@@ -181,28 +181,22 @@ let dogs0 = [
         predictedWeight: 15,
         price: 500,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: {
-            number: 6,
-            unit: 'months'
-        },
+        age: 6,
         spayedOrNeutered: true,
-        personalityAttributes: ['loving', 'playful'],
+        personalityAttributes: ['loving', 'intelligent'],
         healthIssues: ['dental', 'vision'],
-        healthRating: 4,
+        healthRating: 2,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
         gender: 'female'
     },
     {
         name: 'Floof2',
         description: 'Fluffy little friend',
-        weight: 6,
+        weight: 15,
         predictedWeight: 15,
         price: 500,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: {
-            number: 6,
-            unit: 'months'
-        },
+        age: 31,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
@@ -217,14 +211,11 @@ let dogs0 = [
         predictedWeight: 15,
         price: 500,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: {
-            number: 6,
-            unit: 'months'
-        },
+        age: 61,
         spayedOrNeutered: true,
-        personalityAttributes: ['loving', 'playful'],
+        personalityAttributes: ['calm', 'playful'],
         healthIssues: ['dental', 'vision'],
-        healthRating: 4,
+        healthRating: 5,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
         gender: 'male'
     }
@@ -238,14 +229,11 @@ let dogs3 = [
         predictedWeight: 15,
         price: 500,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: {
-            number: 6,
-            unit: 'months'
-        },
+        age: 23,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
-        healthRating: 4,
+        healthRating: 5,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
         gender: 'female'
     },
@@ -256,14 +244,11 @@ let dogs3 = [
         predictedWeight: 15,
         price: 500,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: {
-            number: 6,
-            unit: 'months'
-        },
+        age: 90,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
-        healthRating: 4,
+        healthRating: 2,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
         gender: 'other'
     }
@@ -277,16 +262,13 @@ let dogs4 = [
         predictedWeight: 15,
         price: 500,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: {
-            number: 6,
-            unit: 'months'
-        },
+        age: 57,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
-        healthRating: 4,
+        healthRating: 5,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
-        gender: 'female'
+        gender: 'other'
     }
 ];
 

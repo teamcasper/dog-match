@@ -2,8 +2,7 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-
-const { getDogs0, getDogs3, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
+const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
     it('posts a dog when you are signed in', () => {
@@ -250,5 +249,77 @@ describe('end to end tests of Dogs route', () => {
                     expect(res.body).toEqual({ error: 'You are not authorized to make this change' });            
                 });
         }           
+    });
+
+    it('gets dogs by trait query', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?personalityAttributesSearchType=and&personalityAttributes=loving,playful')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).toContainEqual(createdDogs3[1]);
+                expect(res.body).toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
+    });
+    
+    it('gets dogs with multiple types of queries', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=4')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).not.toContainEqual(createdDogs3[1]);
+                expect(res.body).toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
+    });
+
+    it('gets dogs with in city based on zip and multiple types of queries', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?zip=97220&citySearch=true&personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=4')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).not.toContainEqual(createdDogs3[1]);
+                expect(res.body).not.toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
+    });
+    
+    it('gets dogs within radius of zip and multiple types of queries', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?zip=97220&radius=3&personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=2')
+            .then(res => {
+                expect(res.body).not.toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).toContainEqual(createdDogs3[1]);
+                expect(res.body).not.toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
     });
 });
