@@ -9,7 +9,7 @@ describe('dog query', () => {
     describe('by breed', () => {
         it('returns a query for dogs with any of the selected breeds', () => {
             const query = { 
-                searchType: 'or',
+                breedSearchType: 'or',
                 breed: 'golden,husky,samoyed'
             };
             expect(dogQuery(query)).toEqual({ 
@@ -19,7 +19,7 @@ describe('dog query', () => {
 
         it('returns a query for dogs with all of the selected breeds', () => {
             const query = { 
-                searchType: 'and',
+                breedSearchType: 'and',
                 breed: 'golden,husky,samoyed' 
             };
             expect(dogQuery(query)).toEqual({ 
@@ -29,7 +29,7 @@ describe('dog query', () => {
 
         it('returns a query for dogs with none of the selected breeds', () => {
             const query = { 
-                searchType: 'not',
+                breedSearchType: 'not',
                 breed: 'golden,husky,samoyed'
             };
             expect(dogQuery(query)).toEqual({ 
@@ -64,7 +64,7 @@ describe('dog query', () => {
     describe('by personality attributes', () => {
         it('returns a query for dogs with any of the selected personality attributes', () => {
             const query = { 
-                searchType: 'or',
+                personalityAttributesSearchType: 'or',
                 personalityAttributes: 'loving,playful' 
             };
             expect(dogQuery(query)).toEqual({ 
@@ -74,7 +74,7 @@ describe('dog query', () => {
 
         it('returns a query for dogs with all of the selected personality attributes', () => {
             const query = { 
-                searchType: 'and',
+                personalityAttributesSearchType: 'and',
                 personalityAttributes: 'loving,playful' 
             };
             expect(dogQuery(query)).toEqual({ 
@@ -84,7 +84,7 @@ describe('dog query', () => {
 
         it('returns a query for dogs with none of the selected personality attributes', () => {
             const query = { 
-                searchType: 'not',
+                personalityAttributesSearchType: 'not',
                 personalityAttributes: 'anxious,protective' 
             };
             expect(dogQuery(query)).toEqual({ 
