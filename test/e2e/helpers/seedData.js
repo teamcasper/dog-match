@@ -186,7 +186,7 @@ let dogs0 = [
             unit: 'months'
         },
         spayedOrNeutered: true,
-        personalityAttributes: ['loving', 'playful'],
+        personalityAttributes: ['loving', 'intelligent'],
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',
@@ -222,7 +222,7 @@ let dogs0 = [
             unit: 'months'
         },
         spayedOrNeutered: true,
-        personalityAttributes: ['loving', 'playful'],
+        personalityAttributes: ['calm', 'playful'],
         healthIssues: ['dental', 'vision'],
         healthRating: 4,
         healthDetails: 'Has a cavity, slight loss of vision in left eye',

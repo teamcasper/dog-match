@@ -3,7 +3,7 @@ const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
 
-const { getDogs0, getDogs3, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
+const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
     it('posts a dog when you are signed in', () => {
@@ -251,4 +251,24 @@ describe('end to end tests of Dogs route', () => {
                 });
         }           
     });
+
+    it('gets dogs by trait query', () => {
+        const createdDogs0 = getDogs0();
+        const createdDogs3 = getDogs3();
+        const createdDogs4 = getDogs4();
+
+        return request(app)
+            .get('/api/dogs?searchType=and&personalityAttributes=loving,playful')
+            .then(res => {
+                expect(res.body).toContainEqual(createdDogs0[1]);
+                expect(res.body).toContainEqual(createdDogs3[0]);
+                expect(res.body).toContainEqual(createdDogs3[1]);
+                expect(res.body).toContainEqual(createdDogs4[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[0]);
+                expect(res.body).not.toContainEqual(createdDogs0[2]);
+
+            });
+    });
+
+
 });
