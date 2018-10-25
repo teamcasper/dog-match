@@ -2,7 +2,6 @@
 const { dropCollection } = require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
-
 const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
 
 describe('end to end tests of Dogs route', () => {
