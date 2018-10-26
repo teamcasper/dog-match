@@ -187,13 +187,13 @@ describe('dog query', () => {
 
     describe('by spayed/neutered', () => {
         it('returns true when request is true', () => {
-            const query = { spayedOrNeutered: true };
-            expect(dogQuery(query)).toEqual(query);
+            const query = { spayedOrNeutered: 'true' };
+            expect(dogQuery(query)).toEqual({ spayedOrNeutered: true });
         });
 
         it('returns false when request is false', () => {
-            const query = { spayedOrNeutered: false };
-            expect(dogQuery(query)).toEqual(query);
+            const query = { spayedOrNeutered: 'false' };
+            expect(dogQuery(query)).toEqual({ spayedOrNeutered: false });
         });
     });
 });
