@@ -1,4 +1,4 @@
-const breedQuery = require('../../lib/util/breed.query');
+const breedQuery = require('../../lib/util/breed-query');
 
 describe('Breed query test', () =>{
 
@@ -10,12 +10,12 @@ describe('Breed query test', () =>{
     describe('search by shed', () => {
 
         it('returns true when shed request is yes', () => {
-            const query = { shedFactor: true };
+            const query = { shed: true };
             expect(breedQuery(query)).toEqual(query);
         });
 
         it('returns false when shed request is no', () => {
-            const query = { shedFactor: false };
+            const query = { shed: false };
             expect(breedQuery(query)).toEqual(query);
         });
     });
@@ -41,7 +41,7 @@ describe('Breed query test', () =>{
                 types: 'Smooth, Double, Silky, Wool, Wire, Combination, No hair'
             };
             expect(breedQuery(query)).toEqual({
-                types: { $all: [
+                coatTypes: { $all: [
                     'Smooth',
                     'Double',
                     'Silky',
@@ -59,7 +59,7 @@ describe('Breed query test', () =>{
                 types: 'silky, smooth, double'
             };
             expect(breedQuery(query)).toEqual({
-                types: { $in: ['silky', 'smooth', 'double'] }
+                coatTypes: { $in: ['silky', 'smooth', 'double'] }
             });
         });
     });

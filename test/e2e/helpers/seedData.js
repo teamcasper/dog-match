@@ -129,17 +129,17 @@ let users = [
 
 let matches = [
     {
-        datePosted: Date('May 1, 2018'),
-        dateFulfilled: Date('June 1, 2018'),
+        datePosted: new Date('May 1, 2018'),
+        dateFulfilled: new Date('June 1, 2018'),
         feePaid: 100.00
     },
     {
-        datePosted: Date('Jan 15, 2017'),
-        dateFulfilled: Date('March 1, 2017'),
+        datePosted: new Date('Jan 15, 2017'),
+        dateFulfilled: new Date('March 1, 2017'),
         feePaid: 100.00
     },
     {
-        datePosted: Date('April 4, 2017'),
+        datePosted: new Date('April 4, 2017'),
     }
 ];
 
@@ -181,7 +181,7 @@ let dogs0 = [
         predictedWeight: 15,
         price: 120,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: 6,
+        ageInMonths: 6,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'intelligent'],
         healthIssues: ['dental', 'vision'],
@@ -196,7 +196,7 @@ let dogs0 = [
         predictedWeight: 15,
         price: 600,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: 31,
+        ageInMonths: 31,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
@@ -211,7 +211,7 @@ let dogs0 = [
         predictedWeight: 15,
         price: 225,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: 61,
+        ageInMonths: 61,
         spayedOrNeutered: true,
         personalityAttributes: ['calm', 'playful'],
         healthIssues: ['dental', 'vision'],
@@ -229,7 +229,7 @@ let dogs3 = [
         predictedWeight: 15,
         price: 475,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: 23,
+        ageInMonths: 23,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
@@ -244,7 +244,7 @@ let dogs3 = [
         predictedWeight: 15,
         price: 366.22,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: 90,
+        ageInMonths: 90,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
@@ -262,7 +262,7 @@ let dogs4 = [
         predictedWeight: 15,
         price: 1800,
         photoUrl: 'https://i.pinimg.com/originals/a7/f7/73/a7f773018836201fb5e6d1e9a24049b8.jpg',
-        age: 57,
+        ageInMonths: 57,
         spayedOrNeutered: true,
         personalityAttributes: ['loving', 'playful'],
         healthIssues: ['dental', 'vision'],
@@ -394,20 +394,22 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
+
+    matches[0].seeker = createdUsers[0]._id;
+    matches[0].provider = createdUsers[1]._id;
+    matches[0].dog = createdDogs0[0]._id;
+
+    matches[1].seeker = createdUsers[0]._id;
+    matches[1].provider = createdUsers[2]._id;
+    matches[1].dog = createdDogs0[1]._id;
+
+    matches[2].seeker = createdUsers[1]._id;
+    matches[2].provider = createdUsers[2]._id;
+    matches[2].dog = createdDogs0[2]._id;
+
     return Promise.all(matches.map(createMatch)).then(matchesRes => {
         createdMatches = matchesRes;
 
-        matches[0].seeker = createdUsers[0]._id;
-        matches[0].provider = createdUsers[1]._id;
-        matches[0].dog = createdDogs0[0]._id;
-
-        matches[1].seeker = createdUsers[0]._id;
-        matches[1].provider = createdUsers[2]._id;
-        matches[1].dog = createdDogs0[1]._id;
-
-        matches[2].seeker = createdUsers[1]._id;
-        matches[2].provider = createdUsers[2]._id;
-        matches[2].dog = createdDogs0[2]._id;
     });
 });
 
