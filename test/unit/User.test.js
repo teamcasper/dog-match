@@ -29,7 +29,7 @@ describe('User Model', () => {
             preferredName: 'Doug'
         });
 
-        const errors = getErrors(user.validateSync(), 3);
+        const errors = getErrors(user.validateSync(), 4);
         expect(errors.fullName.properties.message).toEqual('Name is required.');
     });
 });
