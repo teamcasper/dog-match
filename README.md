@@ -31,10 +31,18 @@ Detailed queries are supported for Dogs and Breeds.
 
 In addition, the following aggregation reports are available:
 - minimum, maximum, and average price of dogs by zip code
+- minimum, maximum, and average price of dogs by city
+- report of successful adoptions
 
 ## Setup/Installation Requirements
 
-**_should contain build/test/run instructions_**
+# Front end
+1. Download all components from git hub
+    - dog-match (back end)
+    - dog-match-app (front) 
+
+# Back
+
 
 ## Known Bugs
 
