@@ -86,8 +86,59 @@ describe('end to end test for breed routes', () => {
             });
     });
 
+    it('search for hypoallergenic dogs', () => {
+        const breedResults = getBreeds();
+        
+        return request(app)
+            .get('/api/breeds')
+            .query({ hypoallergenic: true })
+            .then(res => {
+                expect(res.body).toEqual([breedResults[0], breedResults[2]]);
+            });
+    });
 
+    it('search for non hypoallergenic dogs', () => {
+        const breedResults = getBreeds();
+        
+        return request(app)
+            .get('/api/breeds')
+            .query({ hypoallergenic: false })
+            .then(res => {
+                expect(res.body).toEqual([breedResults[1]]);
+            });
+    });
 
+    it('search for dogs that shed', () => {
+        const breedResults = getBreeds();
+        
+        return request(app)
+            .get('/api/breeds')
+            .query({ shed: true })
+            .then(res => {
+                expect(res.body).toEqual([breedResults[0], breedResults[1]]);
+            });
+    });
 
+    it('search for dogs that are hypoallergenic and does not shed', () => {
+        const breedResults = getBreeds();
+        
+        return request(app)
+            .get('/api/breeds')
+            .query({ hypoallergenic: true, shed: true })
+            .then(res => {
+                expect(res.body).toEqual([breedResults[0]]);
+            });
+    });
+
+    it('search for dogs that have a silky coat and does not shed', () => {
+        const breedResults = getBreeds();
+        
+        return request(app)
+            .get('/api/breeds')
+            .query({ coatTypes: 'Silky', shed: false })
+            .then(res => {
+                expect(res.body).toEqual([breedResults[2]]);
+            });
+    });
 
 });
