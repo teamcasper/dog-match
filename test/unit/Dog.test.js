@@ -18,7 +18,8 @@ describe('Dog Model', () => {
             healthRating: 4,
             healthDetails: 'Has a cavity, slight loss of vision in left eye',
             dogProvider: Types.ObjectId(),
-            gender: 'female'
+            gender: 'female',
+            available: true
         };
 
         const dog = new Dog(data);
