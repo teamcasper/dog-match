@@ -130,4 +130,14 @@ describe('matches routes', () => {
         }
         
     });
+
+    it('gets aggregate: successfulMatches', () => {
+
+        return request(app)
+            .get('/api/matches/ags/successfulMatches')
+            .then(res => {
+                expect(res.body.length).toEqual(2);
+            });
+
+    });
 });
