@@ -4,20 +4,6 @@ const request = require('supertest');
 const app = require('../../lib/app');
 const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
 
-// const createdUsers = getUsers();
-// const createdDogs0 = getDogs0();
-// const createdDogs3 = getDogs3();
-// const createdDogs4 = getDogs4();
-    
-// const dogsWithOwnerInfo = [
-//     { ...createdDogs0[0], dogProvider: getOwnerInfo(createdUsers[0]) },
-//     { ...createdDogs0[0], dogProvider: getOwnerInfo(createdUsers[0]) },
-//     { ...createdDogs0[0], dogProvider: getOwnerInfo(createdUsers[0]) },
-//     { ...createdDogs3[0], dogProvider: getOwnerInfo(createdUsers[3]) },
-//     { ...createdDogs3[0], dogProvider: getOwnerInfo(createdUsers[3]) },
-//     { ...createdDogs4[0], dogProvider: getOwnerInfo(createdUsers[4]) }
-// ];
-
 const getOwnerInfo = function({ preferredContact, address, businessInfo }) {
     if(businessInfo) return { _id: expect.any(String), preferredContact, address, businessInfo };
     return { _id: expect.any(String), preferredContact, address };
@@ -144,6 +130,7 @@ describe('end to end tests of Dogs route', () => {
     it('gets all dogs for a radius around a zip code', () => {
         const createdDogsOwner3 = getDogs3();
         const createdUsers = getUsers();
+
         return request(app)
             .get('/api/dogs?zip=97220&radius=3')
             .then(res => {
@@ -163,6 +150,7 @@ describe('end to end tests of Dogs route', () => {
         const createdDogsOwner0 = getDogs0();
         const createdDogsOwner3 = getDogs3();
         const createdUsers = getUsers();
+
         return request(app)
             .get('/api/dogs?zip=97220&citySearch=true')
             .then(res => {
@@ -321,86 +309,105 @@ describe('end to end tests of Dogs route', () => {
         const createdDogs0 = getDogs0();
         const createdDogs3 = getDogs3();
         const createdDogs4 = getDogs4();
+        const createdUsers = getUsers();
 
         return request(app)
             .get('/api/dogs?personalityAttributesSearchType=and&personalityAttributes=loving,playful')
             .then(res => {
-                expect(res.body).toContainEqual(createdDogs0[1]);
-                expect(res.body).toContainEqual(createdDogs3[0]);
-                expect(res.body).toContainEqual(createdDogs3[1]);
-                expect(res.body).toContainEqual(createdDogs4[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[2]);
-
+                expect(res.body.length).toEqual(4);
+                expect(res.body).toContainEqual({
+                    ...createdDogs0[1],
+                    dogProvider: getOwnerInfo(createdUsers[0])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs3[0],
+                    dogProvider: getOwnerInfo(createdUsers[3])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs3[1],
+                    dogProvider: getOwnerInfo(createdUsers[3])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs4[0],
+                    dogProvider: getOwnerInfo(createdUsers[4])
+                });
             });
     });
     
-    it.skip('gets dogs with multiple types of queries', () => {
+    it('gets dogs with multiple types of queries', () => {
         const createdDogs0 = getDogs0();
         const createdDogs3 = getDogs3();
         const createdDogs4 = getDogs4();
+        const createdUsers = getUsers();
 
         return request(app)
             .get('/api/dogs?personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=4')
             .then(res => {
-                expect(res.body).toContainEqual(createdDogs0[1]);
-                expect(res.body).toContainEqual(createdDogs3[0]);
-                expect(res.body).not.toContainEqual(createdDogs3[1]);
-                expect(res.body).toContainEqual(createdDogs4[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[2]);
-
+                expect(res.body.length).toEqual(3);
+                expect(res.body).toContainEqual({
+                    ...createdDogs0[1],
+                    dogProvider: getOwnerInfo(createdUsers[0])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs3[0],
+                    dogProvider: getOwnerInfo(createdUsers[3])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs4[0],
+                    dogProvider: getOwnerInfo(createdUsers[4])
+                });
             });
     });
 
-    it.skip('gets dogs within city based on zip and multiple types of queries', () => {
+    it('gets dogs within city based on zip and multiple types of queries', () => {
         const createdDogs0 = getDogs0();
         const createdDogs3 = getDogs3();
         const createdDogs4 = getDogs4();
+        const createdUsers = getUsers();
 
         return request(app)
             .get('/api/dogs?zip=97220&citySearch=true&personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=4')
             .then(res => {
-                expect(res.body).toContainEqual(createdDogs0[1]);
-                expect(res.body).toContainEqual(createdDogs3[0]);
-                expect(res.body).not.toContainEqual(createdDogs3[1]);
-                expect(res.body).not.toContainEqual(createdDogs4[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[2]);
-
+                expect(res.body.length).toEqual(2);
+                expect(res.body).toContainEqual({
+                    ...createdDogs0[1],
+                    dogProvider: getOwnerInfo(createdUsers[0])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs3[0],
+                    dogProvider: getOwnerInfo(createdUsers[3])
+                });
             });
     });
     
-    it.skip('gets dogs within radius of zip and multiple types of queries', () => {
-        const createdDogs0 = getDogs0();
+    it('gets dogs within radius of zip and multiple types of queries', () => {
         const createdDogs3 = getDogs3();
-        const createdDogs4 = getDogs4();
+        const createdUsers = getUsers();
 
         return request(app)
             .get('/api/dogs?zip=97220&radius=3&personalityAttributesSearchType=and&personalityAttributes=loving,playful&minHealth=2')
             .then(res => {
-                expect(res.body).not.toContainEqual(createdDogs0[1]);
-                expect(res.body).toContainEqual(createdDogs3[0]);
-                expect(res.body).toContainEqual(createdDogs3[1]);
-                expect(res.body).not.toContainEqual(createdDogs4[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[0]);
-                expect(res.body).not.toContainEqual(createdDogs0[2]);
-
+                expect(res.body.length).toEqual(2);
+                expect(res.body).toContainEqual({
+                    ...createdDogs3[0],
+                    dogProvider: getOwnerInfo(createdUsers[3])
+                });
+                expect(res.body).toContainEqual({
+                    ...createdDogs3[1],
+                    dogProvider: getOwnerInfo(createdUsers[3])
+                });
             });
     });
 
     it('gets aggregate: min, max, and average price per zip', () => {
-
         return request(app)
             .get('/api/dogs/ags/avgPriceByZip')
             .then(res => {
                 expect(res.body.length).toEqual(3);
             });
-
     });
 
     it('gets aggregate: min, max, and average price per city', () => {
-
         return request(app)
             .get('/api/dogs/ags/dogsByCityAndAvgPrice')
             .then(res => {
