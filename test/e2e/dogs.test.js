@@ -414,4 +414,23 @@ describe('end to end tests of Dogs route', () => {
                 expect(res.body.length).toEqual(2);
             });
     });
+
+    it('gets aggregate: average price per zip', () => {
+
+        return request(app)
+            .get('/api/dogs/ags/avgPriceByZip')
+            .then(res => {
+                expect(res.body.length).toEqual(3);
+            });
+
+    });
+
+    it('gets aggregate: search for all dogs by city and average price of dogs', () => {
+
+        return request(app)
+            .get('/api/dogs/ags/dogsByCityAndAvgPrice')
+            .then(res => {
+                expect(res.body.length).toEqual(2);
+            });
+    });
 });
