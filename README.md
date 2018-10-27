@@ -48,6 +48,7 @@ In addition, the following aggregation reports are available:
 
 ## Known Bugs
 
+
 The front-end of this application is only a partial implementation to demonstrate the capabilities of the back-end.
 
 ## Technologies Used
