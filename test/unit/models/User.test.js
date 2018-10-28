@@ -1,5 +1,5 @@
-const { getErrors } = require('./helpers/getErrors');
-const User = require('../../lib/models/User');
+const { getErrors } = require('../helpers/getErrors');
+const User = require('../../../lib/models/User');
 
 describe('User Model', () => {
     it('accepts a valid user when passed', () => {

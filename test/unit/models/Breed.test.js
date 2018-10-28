@@ -1,5 +1,5 @@
-const { getErrors } = require('./helpers/getErrors');
-const Breed = require('../../lib/models/Breed');
+const { getErrors } = require('../helpers/getErrors');
+const Breed = require('../../../lib/models/Breed');
 
 describe('Breed model', () => {
 

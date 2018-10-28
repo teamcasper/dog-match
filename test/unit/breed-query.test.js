@@ -1,4 +1,4 @@
-const breedQuery = require('../../lib/util/breed-query');
+const breedQuery = require('../../lib/util/queries/breed-query');
 
 describe('Breed query test', () =>{
 

@@ -1,5 +1,5 @@
-const { getErrors } = require('./helpers/getErrors');
-const Dog = require('../../lib/models/Dog');
+const { getErrors } = require('../helpers/getErrors');
+const Dog = require('../../../lib/models/Dog');
 const { Types } = require('mongoose');
 
 describe('Dog Model', () => {
