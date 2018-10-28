@@ -1,4 +1,4 @@
-const { hash, compare } = require('../../lib/util/hashing');
+const { hash, compare } = require('../../lib/util/auth/hashing');
 
 describe('password hasher', () => {
     it('hash a password', () => {

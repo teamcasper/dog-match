@@ -1,4 +1,4 @@
-const { tokenize, untokenize } = require('../../lib/util/tokenizer');
+const { tokenize, untokenize } = require('../../lib/util/auth/tokenizer');
 
 describe('tokenizer', () => {
     it('creates a token for a payload', () => {

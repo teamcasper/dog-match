@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-const { dropCollection } = require('./helpers/db');
+require('./helpers/db');
 const request = require('supertest');
 const app = require('../../lib/app');
 const { getDogs0, getDogs3, getDogs4, getUsers, getBreeds, getToken0, getToken3 } = require('./helpers/seedData');
@@ -63,6 +63,7 @@ describe('end to end tests of Dogs route', () => {
 
     it('returns an error when you try to post a dog but are not signed in', () => {
         const createdBreeds = getBreeds(); 
+
         return request(app)
             .post('/api/dogs')
             .send({
@@ -108,6 +109,7 @@ describe('end to end tests of Dogs route', () => {
     it('gets all dogs in a zip code', () => {
         const createdDogs = getDogs0();
         const createdUsers = getUsers();
+        
         return request(app)
             .get('/api/dogs?zip=97205')
             .then(res => {
@@ -362,7 +364,6 @@ describe('end to end tests of Dogs route', () => {
     it('gets dogs within city based on zip and multiple types of queries', () => {
         const createdDogs0 = getDogs0();
         const createdDogs3 = getDogs3();
-        const createdDogs4 = getDogs4();
         const createdUsers = getUsers();
 
         return request(app)
@@ -401,7 +402,7 @@ describe('end to end tests of Dogs route', () => {
 
     it('gets aggregate: min, max, and average price per zip', () => {
         return request(app)
-            .get('/api/dogs/ags/avgPriceByZip')
+            .get('/api/dogs/ags/priceByZip')
             .then(res => {
                 expect(res.body.length).toEqual(3);
             });
@@ -409,26 +410,7 @@ describe('end to end tests of Dogs route', () => {
 
     it('gets aggregate: min, max, and average price per city', () => {
         return request(app)
-            .get('/api/dogs/ags/dogsByCityAndAvgPrice')
-            .then(res => {
-                expect(res.body.length).toEqual(2);
-            });
-    });
-
-    it('gets aggregate: average price per zip', () => {
-
-        return request(app)
-            .get('/api/dogs/ags/avgPriceByZip')
-            .then(res => {
-                expect(res.body.length).toEqual(3);
-            });
-
-    });
-
-    it('gets aggregate: search for all dogs by city and average price of dogs', () => {
-
-        return request(app)
-            .get('/api/dogs/ags/dogsByCityAndAvgPrice')
+            .get('/api/dogs/ags/priceByCity')
             .then(res => {
                 expect(res.body.length).toEqual(2);
             });

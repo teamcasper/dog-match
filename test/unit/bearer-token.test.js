@@ -1,4 +1,4 @@
-const bearerToken = require('../../lib/util/bearer-token.js');
+const bearerToken = require('../../lib/util/auth/bearer-token');
 
 describe('bearer token middleware', () => {
     it('adds a bearer token to request', () => {
