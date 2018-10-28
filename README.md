@@ -31,12 +31,23 @@ Detailed queries are supported for Dogs and Breeds.
 
 In addition, the following aggregation reports are available:
 - minimum, maximum, and average price of dogs by zip code
+- minimum, maximum, and average price of dogs by city
+- report of successful adoptions
 
 ## Setup/Installation Requirements
 
-**_should contain build/test/run instructions_**
+# Back end
+1. have node and mongoDb installed.  Enter your mongoDb location in your .env according to the example provided.
+1. Download dog-match from git hub
+1. install all dependencies (npm i)
+1. get an api key from zipcodeapi.com.  You may get two keys for more lookups.  Enter the key(s) in your .env according to the example provided.
+1. Begin the application (npm run start).
+
+# Front end
+
 
 ## Known Bugs
+
 
 The front-end of this application is only a partial implementation to demonstrate the capabilities of the back-end.
 
