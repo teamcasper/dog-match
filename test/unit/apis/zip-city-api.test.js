@@ -1,5 +1,5 @@
 require('dotenv').config();
-const zipCityApi = require('../../lib/util/zip-city-api');
+const zipCityApi = require('../../../lib/util/apis/zip-city-api');
 
 describe('Zip code by location', () => {
 

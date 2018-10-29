@@ -1,5 +1,5 @@
 require('dotenv').config();
-const zipApi = require('../../lib/util/zip-radius-api');
+const zipApi = require('../../../lib/util/apis/zip-radius-api');
 
 describe('test zip-api', () => {
 
