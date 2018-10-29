@@ -36,14 +36,14 @@ In addition, the following aggregation reports are available:
 
 ## Setup/Installation Requirements
 
-# Back end
+### Back end
 1. have node and mongoDb installed.  Enter your mongoDb location in your .env according to the example provided.
 1. Download dog-match from git hub
 1. install all dependencies (npm i)
 1. get an api key from zipcodeapi.com.  You may get two keys for more lookups.  Enter the key(s) in your .env according to the example provided.
 1. Begin the application (npm run start).
 
-# Front end
+### Front end
 
 
 ## Known Bugs
