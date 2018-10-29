@@ -1,4 +1,4 @@
-const dogQuery = require('../../lib/util/dog-query');
+const dogQuery = require('../../../lib/util/queries/dog-query');
 
 describe('dog query', () => {
     it('creates a query for everything', () => {

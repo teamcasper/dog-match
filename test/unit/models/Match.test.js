@@ -1,5 +1,5 @@
-const { getErrors } = require('./helpers/getErrors');
-const Match = require('../../lib/models/Match');
+const { getErrors } = require('../helpers/getErrors');
+const Match = require('../../../lib/models/Match');
 const { Types } = require('mongoose');
 
 describe('Match Model', () => {
