@@ -1,45 +1,66 @@
-# _{Dog Match}_
+# Dog Match
+https://alchemy-dog-match.herokuapp.com/
+## Matching dogs with people who will love them
 ![Uber happy samoyed](http://www.holidogtimes.com/wp-content/uploads/2018/01/samoyed.png?2e4e73)
 
-#### _{Brief description of application}, {10/24/2018}_
-
-#### By _**{Karen Painter}**_
-####    _**{David Chhing}**_
-####    _**{Sarah Flynn}**_
-
+**By David Chhing, Sarah Flynn, Karen Painter**
+    
 ## Description
 
-_{This application was built with the emphasis on the back end server. We created a database with a collection of breeds, dogs, matches (between dog seeker and dog provider), and users. Our app offers the ability to query and aggregate dog information for potential buyers or sellers. Specifically, it allows users to find out how many dogs are in their area by zip code search, cost, dog personality traits, and much more.....
+This application was built with the emphasis on the back end server, although a partially functional front-end is provided.  We created a database with a collection of breeds, dogs, matches (between dog seeker and dog provider), and users. Our app provides three primary functions:
+1. People can research various dog breeds and find a good fit based on criteria they are seeking.
+1. Once they've settled on the kind of dog they want, users can search for dogs in their area that meet their specific criteria.
+1. Once they've found dogs they are interested in, they can initiate contact with the dog owner through the site.
 
-}_
+Any one can search the site, but users must be authenticated to post or delete dogs or to initiate contact with dog owners.
+
+## Technical Description
+
+### Models
+
+- Dog: a dog available for sale or adoption
+- User: a registered user of the application.  Can be a seeker or a provider of dogs.
+- Match: a record of the contact initiated between the seeker and the dog owner
+- Breed: a general description of a breed
+
+### Routes
+
+Basic CRUD functions are available for all Model types.  
+
+Detailed queries are supported for Dogs and Breeds.
+
+In addition, the following aggregation reports are available:
+- minimum, maximum, and average price of dogs by zip code
+- minimum, maximum, and average price of dogs by city
+- report of successful adoptions
 
 ## Setup/Installation Requirements
 
-* _You will need the following:_
-* _Heroku, Postman, Github, mongoDB_
+# Back end
+1. have node and mongoDb installed.  Enter your mongoDb location in your .env according to the example provided.
+1. Download dog-match from git hub
+1. install all dependencies (npm i)
+1. get an api key from zipcodeapi.com.  You may get two keys for more lookups.  Enter the key(s) in your .env according to the example provided.
+1. Begin the application (npm run start).
 
-* _Install the following dependencies:_
-* _bcrypt, express, jsonwebtoken, mongoose_
+# Front end
 
-* _We utilized the following devDependencies_
-* _morgan, dotenv, eslint, jest, jest-nyan-reporter, nodemon, supertest_
-
-_{Leave nothing to chance! You want it to be easy for potential users, employers and collaborators to run your app. Do I need to run a server? How should I set up my databases? Is there other code this app depends on?}_
 
 ## Known Bugs
 
-_{Are there issues that have not yet been resolved that you want to let users know you know?  Outline any issues that would impact use of your application.  Share any workarounds that are in place. }_
 
-## Support and contact details
-
-_{Let people know what to do if they run into any issues or have questions, ideas or concerns.  Encourage them to contact you or make a contribution to the code.}_
+The front-end of this application is only a partial implementation to demonstrate the capabilities of the back-end.
 
 ## Technologies Used
 
-_{Mongoose, express, jsonwebtoken, }_
+    deployment: Heroku
+    database: MongoDB, Mongoose
+    server: Node, ExpressJS
+    front-end: Vue
+    authentication: bcrypt, jsonwebtoken
+    testing: Postman, Supertest, nodemon, Jest, Morgan
+    version control: Github
 
 ### License
 
-*{WTFPL}*
-
-Copyright (c) 2018 **_{David Chhing, Sarah Flynn, Karen Painter}_**
+Copyright (c) 2018 David Chhing, Sarah Flynn, Karen Painter
