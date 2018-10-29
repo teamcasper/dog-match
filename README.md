@@ -44,22 +44,26 @@ In addition, the following aggregation reports are available:
 1. Begin the application (npm run start).
 
 ### Front end
-
+1. Install all dependencies: npm i
+2. Ensure that the proxy server address in the vue.config.js file matches your back end
+3. npm run serve compiles and hot reloads for development
+4. npm run build compiles and minfies for production
+5. npm run lint lints and fixes files
 
 ## Known Bugs
 
-
-The front-end of this application is only a partial implementation to demonstrate the capabilities of the back-end.
+The front-end of this application is only a quick, partial implementation to demonstrate some of the capabilities of the back-end for the purposes of a class presentation. It is far from finished.
 
 ## Technologies Used
 
     deployment: Heroku
     database: MongoDB, Mongoose
     server: Node, ExpressJS
-    front-end: Vue
+    front-end: Vue, Vue Router
     authentication: bcrypt, jsonwebtoken
-    testing: Postman, Supertest, nodemon, Jest, Morgan
+    testing: Postman, Supertest, nodemon, Jest, Morgan, Travis
     version control: Github
+    front-end dev dependencies: vue/cli-plugin-babel, vue/cli-plugin-eslint, vue/cli-service, vue-template-compiler
 
 ### License
 
