@@ -1,5 +1,5 @@
 
-const zipCityApi = require('../../lib/util/city-middleware');
+const zipCityApi = require('../../../lib/util/apis/city-middleware');
 
 describe('Get zip code by location middleware test', () => {
 

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const getZipCodeData = require('../../lib/util/radius-middleware');
+const getZipCodeData = require('../../../lib/util/apis/radius-middleware');
 
 describe('test the middleware that gets a radius of zip codes', () => {
 
